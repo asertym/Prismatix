@@ -15,7 +15,7 @@ export default function genSVGPalette(palette) {
 			x = index * (rectWidth + gap);
 		}
 		const colorHex = new Color(`${color}`).toString({ format: 'hex' });
-		console.log(colorHex);
+
 		return `<rect x="${x}" width="${rectWidth}" height="${rectHeight}" rx="6" fill="${colorHex}"/>`;
 	});
 

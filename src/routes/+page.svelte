@@ -1,19 +1,20 @@
 <script>
-	import { Input, Button } from '$components';
-	import Icon from '$components/icon.svelte';
-	import configRender from '$lib/configRender';
-	import { generateColor } from '$lib/generatecolor';
-	import genSVGPalette from '$lib/genSVGPalette';
+	import { Input, Button, Icon } from '$components';
+	import configRender from '$lib/exportRender';
+	import { generateColor } from '$lib/genPalette';
+	import { copyRender, copyFigma, tweakColor, nameThatColor } from '$lib/utils';
 	import Color from 'colorjs.io';
 
-	let color = $state('#F43F5E'); // default selected color
-	let colorTweaked = $derived(tweakColor(color, nudgeH, nudgeS));
-	let preserve = $state(true);
-	let palette = $derived({}); // array declaration
-	let colorName = $state('primary'); //default name
-	let copy = $state(false);
+	let color = $state('#069420'); // default selected color
+	let colorName = $state();
+	let colorTweaked = $derived(tweakColor(color, nudgeH, nudgeS)); // adjusted input color
+	let preserve = $state(true); // preserve input shade
+	let palette = $derived({}); // object declaration
+	// let exportName = $state('primary'); //export name
+	let copy = $state(false); // is shade copied?
 
 	let themeRender = $state(); // bind for component
+
 	let renderType = $state('tw4'); // default value selected
 	let outputValue = $state('oklch'); // default value selected
 
@@ -37,19 +38,6 @@
 	let showSettings = $state(false);
 	let showExport = $state(false);
 
-	function tweakColor(color, nudgeH, nudgeS) {
-		let tweaked = new Color(color);
-		tweaked.hsl.h += nudgeH;
-		tweaked.hsl.s += nudgeS;
-
-		return tweaked;
-	}
-
-	// Copy generated code
-	function copyRender() {
-		navigator.clipboard.writeText(themeRender.textContent);
-	}
-
 	function randomColor() {
 		const hue = Math.random() * 360;
 		const sat = 15 + Math.random() * 85;
@@ -58,12 +46,13 @@
 		color = new Color(`hsl(${hue}, ${sat}%, ${lig}%)`).toString({ format: 'hex' });
 	}
 
-	function copyFigma() {
-		let source = genSVGPalette(palette);
-		navigator.clipboard.writeText(source);
+	function handlePaste(e) {
+		e.preventDefault();
+		color = e.clipboardData.getData('text');
 	}
 
 	$effect(() => {
+		colorName = nameThatColor(color);
 		palette = generateColor(colorTweaked, preserve, shades, outputValue);
 	});
 </script>
@@ -77,7 +66,9 @@
 	<!-- Palette showcase -->
 	<div>
 		<div class="mb-2 flex items-center justify-between">
-			<div>Palette 1</div>
+			<div>
+				Palette 1 <span class="capitalize">({colorName})</span>
+			</div>
 			<div class="mx-2 flex items-center justify-center space-x-12">
 				<Input
 					type="radio"
@@ -141,7 +132,7 @@
 				style={`background-color: ${color}`}
 			></div>
 		</div>
-		<Input type="text" class="w-48 text-center" bind:value={color} />
+		<Input type="text" class="w-48 text-center" bind:value={color} onpaste={handlePaste} />
 	</div>
 	<div class="space-x-2">
 		<Button class="rounded px-4 py-4" onclick={randomColor} icon={{ name: 'dice', size: '20px' }} />
@@ -210,11 +201,14 @@
 							{ label: 'Vanilla CSS', value: 'css' }
 						]}
 					/>
-					<Button class="px-4" onclick={copyFigma}>Copy Figma</Button>
+					<Button class="px-4" onclick={copyFigma(palette)}>Copy Figma</Button>
 				</div>
 
 				<div class="relative w-full rounded-lg bg-stone-800 px-5 pt-8 pb-5 font-mono text-stone-50">
-					<button class="absolute top-3 right-5 text-green-500" onclick={copyRender}>Copy</button>
+					<button
+						class="absolute top-3 right-5 text-green-500"
+						onclick={copyRender(themeRender.textContent)}>Copy</button
+					>
 					<div bind:this={themeRender}>
 						<pre>{configRender(renderType, palette, colorName)}</pre>
 					</div>

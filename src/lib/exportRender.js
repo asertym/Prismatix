@@ -1,4 +1,5 @@
 export default function configRender(type, object, name) {
+	name = name.toLowerCase().replace(' ', '-');
 	if (type == 'tw4') {
 		return [
 			`@theme {`,
