@@ -3,6 +3,10 @@
 	import configRender from '$lib/exportRender';
 	import { generateColor } from '$lib/genPalette';
 	import { copyRender, copyFigma, tweakColor, nameThatColor } from '$lib/utils';
+	import Bentos from '$modules/bentos.svelte';
+	import Quote from '$modules/quote.svelte';
+	import Stats from '$modules/stats.svelte';
+	import Works from '$modules/works.svelte';
 	import Color from 'colorjs.io';
 
 	let color = $state('#069420'); // default selected color
@@ -111,17 +115,20 @@
 	</div>
 
 	<!-- Components -->
-	<div>
-		<div class="text-lg">Examples</div>
-		<div>
+	<div class="mb-36">
+		<div class="space-y-36">
 			<!-- Components here -->
+			<Works />
+			<Stats />
+			<Bentos />
+			<Quote />
 		</div>
 	</div>
 </div>
 
 <!-- Sticky bottom container -->
 <div
-	class="box box-sm fixed right-0 bottom-4 left-0 container mx-auto flex items-center justify-between rounded-xl border border-stone-100 bg-white px-4 py-2"
+	class="box box-sm fixed right-0 bottom-4 left-0 container mx-auto flex items-center justify-between rounded-xl border border-stone-100 bg-white/75 px-4 py-2 backdrop-blur-2xl"
 >
 	<!-- Color input -->
 	<div class="relative flex items-center">
