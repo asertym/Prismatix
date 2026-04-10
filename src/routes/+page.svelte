@@ -5,12 +5,19 @@
 	import { generateColor } from '$lib/genPalette';
 	import { copyRender, copyFigma, nameThatColor, tweakColor } from '$lib/utils';
 	import Color from 'colorjs.io';
+	import { SvelteURLSearchParams } from 'svelte/reactivity';
 
 	let color = $state('#4F6814'); // default selected color
 	let c = $derived(new Color(color));
-	let colorName = $state();
+	let colorName = $derived(nameThatColor(color));
 	let preserve = $state(true); // preserve input shade
-	let palette = $derived({}); // object declaration
+	let palette = $derived.by(() => {
+		// Only compute palette in browser environment
+		if (typeof document === 'undefined') {
+			return {};
+		}
+		return generateColor(tweakColor(c, nudgeH, nudgeS), preserve, shades, outputValue);
+	}); // object declaration
 	// let exportName = $state('primary'); //export name
 	let copy = $state(false); // is shade copied?
 
@@ -33,10 +40,61 @@
 		{ name: '950', lightness: '5' }
 	];
 
+	// Initialize with default color values
+	const defaultColor = new Color('#4F6814');
 	let baseH = $derived(c.hsl.h),
 		baseS = $derived(c.hsl.s),
-		nudgeH = $derived(baseH),
-		nudgeS = $derived(baseS);
+		nudgeH = $state(defaultColor.hsl.h),
+		nudgeS = $state(defaultColor.hsl.s);
+
+	function initParams() {
+		if (typeof window !== 'undefined') {
+			const params = new URLSearchParams(window.location.search);
+
+			// Extract color from URL
+			const urlColor = params.get('color');
+			if (urlColor) {
+				try {
+					// Validate it's a valid color
+					new Color(urlColor);
+					color = urlColor;
+				} catch {
+					console.warn('Invalid color in URL:', urlColor);
+				}
+			}
+
+			// Extract hue and saturation from URL
+			const urlHue = params.get('hue');
+			const urlSat = params.get('saturation');
+
+			if (urlHue !== null) {
+				nudgeH = parseFloat(urlHue);
+			}
+			if (urlSat !== null) {
+				nudgeS = parseFloat(urlSat);
+			}
+
+			// Extract output format from URL
+			const urlFormat = params.get('format');
+			if (urlFormat && ['oklch', 'hsl', 'hex'].includes(urlFormat)) {
+				outputValue = urlFormat;
+			}
+		}
+	}
+
+	// Update URL when palette values change
+	function updateShareUrl() {
+		if (typeof window !== 'undefined') {
+			const params = new SvelteURLSearchParams();
+			params.set('color', color);
+			params.set('hue', Math.round(nudgeH.toString()));
+			params.set('saturation', Math.round(nudgeS.toString()));
+			params.set('format', outputValue);
+
+			const newUrl = `${window.location.pathname}?${params.toString()}`;
+			window.history.replaceState({}, '', newUrl);
+		}
+	}
 
 	let showSettings = $state(false);
 	let showExport = $state(false);
@@ -47,6 +105,19 @@
 		const lig = 20 + Math.random() * 80;
 
 		color = new Color(`hsl(${hue}, ${sat}%, ${lig}%)`).toString({ format: 'hex' });
+
+		resetConfig(hue, sat);
+		updateShareUrl();
+	}
+
+	function resetConfig(hue, sat) {
+		nudgeH = hue;
+		nudgeS = sat;
+	}
+
+	function newInput() {
+		resetConfig(baseH, baseS);
+		updateShareUrl();
 	}
 
 	function handlePaste(e) {
@@ -64,15 +135,16 @@
 
 	function revertHue() {
 		nudgeH = baseH;
+		updateShareUrl();
 	}
 
 	function revertSat() {
 		nudgeS = baseS;
+		updateShareUrl();
 	}
 
 	$effect(() => {
-		colorName = nameThatColor(color);
-		palette = generateColor(tweakColor(c, nudgeH, nudgeS), preserve, shades, outputValue);
+		initParams();
 	});
 </script>
 
@@ -92,6 +164,7 @@
 				<Input
 					type="radio"
 					bind:family={outputValue}
+					onchange={updateShareUrl}
 					options={[
 						{ label: 'OKLCH', value: 'oklch' },
 						{ label: 'HSL', value: 'hsl' },
@@ -149,7 +222,12 @@
 	<!-- Color input -->
 	<div class="relative flex items-center">
 		<div class="absolute left-2 z-10 inline-block h-8 w-8 overflow-hidden">
-			<input class="pointer-events-auto cursor-pointer opacity-0" type="color" bind:value={color} />
+			<input
+				class="pointer-events-auto cursor-pointer opacity-0"
+				type="color"
+				bind:value={color}
+				onchange={newInput}
+			/>
 			<div
 				class="absolute inset-0 -z-10 h-8 w-8 rounded-lg"
 				style={`background-color: ${color}`}
@@ -160,6 +238,7 @@
 			class="pointer-events-auto w-48 text-center"
 			bind:value={color}
 			onpaste={handlePaste}
+			onchange={updateShareUrl}
 		/>
 	</div>
 	<div>
@@ -212,6 +291,7 @@
 							min="0"
 							max="360"
 							bind:value={nudgeH}
+							onchange={updateShareUrl}
 							class="h-1.5 w-full cursor-pointer appearance-none rounded-lg bg-stone-200 accent-stone-800"
 						/>
 					</div>
@@ -234,6 +314,7 @@
 							min="0"
 							max="100"
 							bind:value={nudgeS}
+							onchange={updateShareUrl}
 							class="h-1.5 w-full cursor-pointer appearance-none rounded-lg bg-stone-200 accent-stone-800"
 						/>
 					</div>
@@ -275,6 +356,7 @@
 					<Input
 						type="radio"
 						bind:family={outputValue}
+						onchange={updateShareUrl}
 						options={[
 							{ label: 'OKLCH', value: 'oklch' },
 							{ label: 'HSL', value: 'hsl' },
