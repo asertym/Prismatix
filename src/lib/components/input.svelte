@@ -69,10 +69,11 @@
 			</div>
 		</label>
 	{:else if type == 'radio'}
-		<div class="flex justify-center space-x-4">
+		<!-- Radio -->
+		<div class="flex items-center space-x-4 {className ?? ''}" {...restProps}>
 			{#each options as { label, value } (value)}
 				<label class="flex items-center space-x-2">
-					<input {...restProps} class="radio hidden" type="radio" {value} bind:group={family} />
+					<input class="radio hidden" type="radio" {value} bind:group={family} />
 					<div
 						class="radio-ui flex h-5 w-5 items-center justify-center rounded-full border border-stone-300 transition-all"
 					>

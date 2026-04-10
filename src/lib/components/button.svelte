@@ -22,7 +22,7 @@
 	role={href && disabled ? 'link' : undefined}
 	tabindex={href && disabled ? -1 : 0}
 	class={`button relative inline-block transition-colors ${size ? ` box-${size}` : ''} ${className ?? ''}`}
-	style={`${color ? `--element-color: var(--color-${color}-500); --label-color:var(--color-${color}-50)` : `--element-color:var(--color-gray-100); --label-color:var(--color-gray-900); --color-shadow: var(--color-stone-200)`}`}
+	style={`${color ? `--element-color: var(--color-${color}-600); --label-color:var(--color-${color}-50)` : `--element-color:var(--color-stone-200); --label-color:var(--color-stone-900); --color-shadow: var(--color-stone-200)`}`}
 	bind:this={ref}
 	{...restProps}
 >
@@ -55,21 +55,6 @@
 
 	.button:hover,
 	.button:active {
-		background-color: oklch(from var(--element-color) calc(l - 0.02) c h);
-	}
-
-	.box-sm:active {
-		--size: 1px;
-		top: var(--size);
-	}
-
-	.box-md:active {
-		--size: 1.5px;
-		top: var(--size);
-	}
-
-	.box-lg:active {
-		--size: 2px;
-		top: var(--size);
+		background-color: oklch(from var(--element-color) calc(l - 0.04) c h);
 	}
 </style>

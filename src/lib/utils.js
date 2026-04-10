@@ -13,10 +13,10 @@ export function copyFigma(palette) {
 	navigator.clipboard.writeText(source);
 }
 
-export function tweakColor(color, nudgeH, nudgeS) {
+export function tweakColor(color, Hue, Sat) {
 	let tweaked = new Color(color);
-	tweaked.hsl.h += nudgeH;
-	tweaked.hsl.s += nudgeS;
+	tweaked.hsl.h = Hue;
+	tweaked.hsl.s = Sat;
 
 	return tweaked;
 }

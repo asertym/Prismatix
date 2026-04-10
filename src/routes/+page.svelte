@@ -1,17 +1,14 @@
 <script>
 	import { Input, Button, Icon } from '$components';
+	import { Bentos, Quote, Stats, Works, Pricing } from '$modules';
 	import configRender from '$lib/exportRender';
 	import { generateColor } from '$lib/genPalette';
-	import { copyRender, copyFigma, tweakColor, nameThatColor } from '$lib/utils';
-	import Bentos from '$modules/bentos.svelte';
-	import Quote from '$modules/quote.svelte';
-	import Stats from '$modules/stats.svelte';
-	import Works from '$modules/works.svelte';
+	import { copyRender, copyFigma, nameThatColor, tweakColor } from '$lib/utils';
 	import Color from 'colorjs.io';
 
-	let color = $state('#069420'); // default selected color
+	let color = $state('#4F6814'); // default selected color
+	let c = $derived(new Color(color));
 	let colorName = $state();
-	let colorTweaked = $derived(tweakColor(color, nudgeH, nudgeS)); // adjusted input color
 	let preserve = $state(true); // preserve input shade
 	let palette = $derived({}); // object declaration
 	// let exportName = $state('primary'); //export name
@@ -23,7 +20,7 @@
 	let outputValue = $state('oklch'); // default value selected
 
 	let shades = [
-		{ name: '50', lightness: '95.1' },
+		{ name: '50', lightness: '95' },
 		{ name: '100', lightness: '90' },
 		{ name: '200', lightness: '80' },
 		{ name: '300', lightness: '70' },
@@ -33,11 +30,13 @@
 		{ name: '700', lightness: '30' },
 		{ name: '800', lightness: '20' },
 		{ name: '900', lightness: '10' },
-		{ name: '950', lightness: '7.1' }
+		{ name: '950', lightness: '5' }
 	];
 
-	let nudgeH = $state(0),
-		nudgeS = $state(0);
+	let baseH = $derived(c.hsl.h),
+		baseS = $derived(c.hsl.s),
+		nudgeH = $derived(baseH),
+		nudgeS = $derived(baseS);
 
 	let showSettings = $state(false);
 	let showExport = $state(false);
@@ -52,12 +51,28 @@
 
 	function handlePaste(e) {
 		e.preventDefault();
-		color = e.clipboardData.getData('text');
+		let pastedText = e.clipboardData.getData('text').trim();
+		if (
+			pastedText &&
+			!pastedText.startsWith('#') &&
+			/^[0-9A-Fa-f]{3}$|^[0-9A-Fa-f]{6}$/.test(pastedText)
+		) {
+			pastedText = `#${pastedText}`;
+		}
+		color = pastedText;
+	}
+
+	function revertHue() {
+		nudgeH = baseH;
+	}
+
+	function revertSat() {
+		nudgeS = baseS;
 	}
 
 	$effect(() => {
 		colorName = nameThatColor(color);
-		palette = generateColor(colorTweaked, preserve, shades, outputValue);
+		palette = generateColor(tweakColor(c, nudgeH, nudgeS), preserve, shades, outputValue);
 	});
 </script>
 
@@ -68,12 +83,12 @@
 	</div>
 
 	<!-- Palette showcase -->
-	<div>
+	<div class="mb-36">
 		<div class="mb-2 flex items-center justify-between">
 			<div>
 				Palette 1 <span class="capitalize">({colorName})</span>
 			</div>
-			<div class="mx-2 flex items-center justify-center space-x-12">
+			<div class="mx-2 flex items-center justify-center">
 				<Input
 					type="radio"
 					bind:family={outputValue}
@@ -122,73 +137,131 @@
 			<Stats />
 			<Bentos />
 			<Quote />
+			<Pricing />
 		</div>
 	</div>
 </div>
 
 <!-- Sticky bottom container -->
 <div
-	class="box box-sm fixed right-0 bottom-4 left-0 container mx-auto flex items-center justify-between rounded-xl border border-stone-100 bg-white/75 px-4 py-2 backdrop-blur-2xl"
+	class="box box-sm pointer-events-none fixed right-0 bottom-4 left-0 z-20 container mx-auto flex items-center justify-between rounded-xl border border-stone-200 bg-white/75 px-4 py-3 backdrop-blur-lg"
 >
 	<!-- Color input -->
 	<div class="relative flex items-center">
 		<div class="absolute left-2 z-10 inline-block h-8 w-8 overflow-hidden">
-			<input class="cursor-pointer opacity-0" type="color" bind:value={color} />
+			<input class="pointer-events-auto cursor-pointer opacity-0" type="color" bind:value={color} />
 			<div
 				class="absolute inset-0 -z-10 h-8 w-8 rounded-lg"
 				style={`background-color: ${color}`}
 			></div>
 		</div>
-		<Input type="text" class="w-48 text-center" bind:value={color} onpaste={handlePaste} />
+		<Input
+			type="text"
+			class="pointer-events-auto w-48 text-center"
+			bind:value={color}
+			onpaste={handlePaste}
+		/>
 	</div>
-	<div class="space-x-2">
-		<Button class="rounded px-4 py-4" onclick={randomColor} icon={{ name: 'dice', size: '20px' }} />
-		<Button
-			class="rounded px-4 py-4"
-			onclick={() => (showSettings = !showSettings)}
-			icon={{ name: 'sliders', size: '20px' }}
-		/>
-		<Button
-			class="rounded px-4 py-4"
-			color="primary"
-			onclick={() => (showExport = !showExport)}
-			icon={{ name: 'export', size: '20px' }}
-		/>
+	<div>
+		<div class="space-x-2">
+			<Button
+				class="pointer-events-auto rounded px-4 py-4"
+				onclick={randomColor}
+				icon={{ name: 'dice', size: '20px' }}
+			/>
+			<Button
+				class="pointer-events-auto rounded px-4 py-4"
+				onclick={() => (showSettings = !showSettings)}
+				icon={{ name: 'sliders', size: '20px' }}
+			/>
+			<Button
+				class="pointer-events-auto rounded px-4 py-4"
+				color="primary"
+				onclick={() => (showExport = !showExport)}
+				icon={{ name: 'export', size: '20px' }}
+			/>
+		</div>
+		<!-- Settings tooltip -->
+		{#if showSettings}
+			<div
+				class="pointer-events-auto fixed right-16 bottom-20 z-60 w-72 transform rounded-xl border border-stone-200 bg-white p-4 shadow-xl backdrop-blur-md"
+			>
+				<div class="flex flex-col space-y-4">
+					<div class="space-y-1">
+						<span class="ml-1 text-[10px] font-bold tracking-wider text-stone-400 uppercase"
+							>Name</span
+						>
+						<Input type="text" name="name" placeholder="name" bind:value={colorName} class="h-9" />
+					</div>
+
+					<div class="space-y-1">
+						<div class="flex h-4 items-center justify-between px-1">
+							<span class="text-[10px] font-bold tracking-wider text-stone-400 uppercase">
+								Hue
+								{#if nudgeH !== baseH}
+									<button
+										class="ml-2 cursor-pointer rounded-sm border border-stone-400 px-1"
+										onclick={revertHue}>Revert</button
+									>
+								{/if}
+							</span>
+							<span class="font-mono text-[10px] text-stone-500">{Math.round(nudgeH)}&deg;</span>
+						</div>
+						<input
+							type="range"
+							min="0"
+							max="360"
+							bind:value={nudgeH}
+							class="h-1.5 w-full cursor-pointer appearance-none rounded-lg bg-stone-200 accent-stone-800"
+						/>
+					</div>
+
+					<div class="space-y-1">
+						<div class="flex h-4 items-center justify-between px-1">
+							<span class="text-[10px] font-bold tracking-wider text-stone-400 uppercase">
+								Saturation
+								{#if nudgeS !== baseS}
+									<button
+										class="ml-2 cursor-pointer rounded-sm border border-stone-400 px-1"
+										onclick={revertSat}>Revert</button
+									>
+								{/if}
+							</span>
+							<span class="font-mono text-[10px] text-stone-500">{Math.round(nudgeS)}%</span>
+						</div>
+						<input
+							type="range"
+							min="0"
+							max="100"
+							bind:value={nudgeS}
+							class="h-1.5 w-full cursor-pointer appearance-none rounded-lg bg-stone-200 accent-stone-800"
+						/>
+					</div>
+				</div>
+			</div>
+		{/if}
 	</div>
 </div>
 
-<!-- Settings tooltip -->
 {#if showSettings}
 	<div
-		class="fixed bottom-20 left-1/2 -translate-x-1/2 transform rounded-lg border border-stone-200 bg-white p-4 shadow-md"
-	>
-		<div class="flex flex-col space-y-6">
-			<div class="flex justify-center space-x-16">
-				<div class="flex items-center space-x-6">
-					<div>Name</div>
-					<Input type="text" name="name" placeholder="name" bind:value={colorName} />
-				</div>
-				<div class="flex items-center space-x-6">
-					<div>Hue</div>
-					<Input type="number" name="hue" placeholder="hue" bind:value={nudgeH} />
-				</div>
-				<div class="flex items-center space-x-6">
-					<div>Saturation</div>
-					<Input type="number" name="saturation" placeholder="saturation" bind:value={nudgeS} />
-				</div>
-			</div>
-		</div>
-	</div>
+		class="fixed inset-0 z-10"
+		onclick={() => (showSettings = !showSettings)}
+		role="presentation"
+	></div>
 {/if}
 
 <!-- Export modal -->
 {#if showExport}
-	<!-- Outer -->
-	<div
-		class="fixed inset-0 z-50 flex items-center justify-center"
-		style="background-color: #00000045;"
-	>
-		<div class="mx-4 w-xl rounded-lg bg-white p-4">
+	<div class="fixed inset-0 z-50 flex items-center justify-center">
+		<!-- Outer -->
+		<div
+			class="absolute inset-0 z-10 bg-stone-950/25"
+			onclick={() => (showExport = false)}
+			role="presentation"
+		></div>
+
+		<div class="z-20 mx-4 w-xl rounded-lg bg-white p-4">
 			<div class="mb-4 flex items-center justify-between">
 				<h3 class="text-lg font-semibold">Export</h3>
 				<Button
@@ -201,6 +274,19 @@
 				<div class="flex justify-between">
 					<Input
 						type="radio"
+						bind:family={outputValue}
+						options={[
+							{ label: 'OKLCH', value: 'oklch' },
+							{ label: 'HSL', value: 'hsl' },
+							{ label: 'HEX', value: 'hex' }
+						]}
+					/>
+					<Button class="px-4" onclick={copyFigma(palette)}>Copy Figma</Button>
+				</div>
+
+				<div>
+					<Input
+						type="radio"
 						bind:family={renderType}
 						options={[
 							{ label: 'Tailwind 4', value: 'tw4' },
@@ -208,14 +294,14 @@
 							{ label: 'Vanilla CSS', value: 'css' }
 						]}
 					/>
-					<Button class="px-4" onclick={copyFigma(palette)}>Copy Figma</Button>
 				</div>
-
 				<div class="relative w-full rounded-lg bg-stone-800 px-5 pt-8 pb-5 font-mono text-stone-50">
 					<button
 						class="absolute top-3 right-5 text-green-500"
-						onclick={copyRender(themeRender.textContent)}>Copy</button
+						onclick={copyRender(themeRender.textContent)}
 					>
+						Copy
+					</button>
 					<div bind:this={themeRender}>
 						<pre>{configRender(renderType, palette, colorName)}</pre>
 					</div>

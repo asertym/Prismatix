@@ -10,7 +10,7 @@
 			<Icon name="quote" size="64px" />
 		</div>
 		<div class="quote text-[32px] leading-relaxed font-medium">
-			“Excellent tool, no issues at all. This product is so cool, I can’t believe i used to live
+			“Excellent tool, no issues at all. This product is so cool, I can’t believe I used to live
 			without it up until this point. My life was a lie, and I have to reconsider some of my
 			long-term career decisions.”
 		</div>

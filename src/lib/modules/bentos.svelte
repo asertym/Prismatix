@@ -24,7 +24,7 @@
 			into heavy color theory.
 		</div>
 	</div>
-	<div class="col-span-7 block py-12" style="--background: var(--color-primary-900);">
+	<div class="col-span-7 block py-12" style="--background: var(--color-primary-800);">
 		<div class="title">Copy, share, reuse!</div>
 		<div>
 			Click any shade to copy its value. Use the Export window to grab code for your project. Soon

@@ -34,6 +34,7 @@
 	},
 	"dependencies": {
 		"apca-w3": "^0.1.9",
+		"chroma-js": "^3.2.0",
 		"color-namer": "^1.4.0",
 		"colorjs.io": "^0.6.1",
 		"nearest-color": "^0.4.4",

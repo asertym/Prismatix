@@ -13,7 +13,7 @@
 			</div>
 			<div class="space-y-6">
 				<div class="title">More Stuff</div>
-				<ul class="space-y-2">
+				<ul class="space-y-4">
 					<li>Docs</li>
 					<li>Github</li>
 					<li>Contrast Checker</li>
@@ -23,7 +23,7 @@
 			</div>
 			<div class="space-y-6">
 				<div class="title">Let's Connect</div>
-				<ul class="space-y-2">
+				<ul class="space-y-4">
 					<li>Contact me</li>
 					<li>Github</li>
 					<li>Figma</li>
