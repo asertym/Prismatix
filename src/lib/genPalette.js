@@ -7,6 +7,8 @@ export const generateColor = (input, preserve, shades, format) => {
 	baseS = baseColor.hsl.s;
 	baseL = baseColor.hsl.l;
 
+	const closest = [];
+
 	const lightnessDelta = [];
 	let difference = 0;
 
@@ -19,15 +21,26 @@ export const generateColor = (input, preserve, shades, format) => {
 	});
 
 	const obj = shades.reduce((obj, { name, lightness }) => {
-		let adjustedL = Number(lightness) + Number(difference);
+		console.log(difference);
+		let adjustedL = Number(lightness) + Number(difference % 1);
+
 		const newColor = new Color(`hsl(${baseH} ${baseS} ${adjustedL})`);
-		console.log(adjustedL);
+
 		obj[name] = newColor.toString({ format });
+
+		if (preserve) closest[name] = Math.abs(baseL - lightness);
+
 		Object.entries(obj).forEach(([shade, color]) => {
 			document.documentElement.style.setProperty(`--color-primary-${shade}`, color);
 		});
 		return obj;
 	}, {});
+
+	// if preserving color, inject original color at closest shade
+	if (preserve) {
+		const [closestShade] = Object.keys(closest).sort((a, b) => closest[a] - closest[b]);
+		obj[closestShade] = baseColor.toString({ format });
+	}
 
 	return obj;
 };
