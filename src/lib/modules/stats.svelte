@@ -3,12 +3,12 @@
 </script>
 
 <div class="grid grid-cols-12 gap-6" style="color: var(--color-primary-900);">
-	<div class="col-span-10 col-start-2 space-y-18">
+	<div class="col-span-12 space-y-18 xl:col-span-10 xl:col-start-2">
 		<div class="relative">
 			<div class="background absolute inset-0">
-				{#await import(`$assets/plane.svg?raw`) then { default: renderIcon }}
+				{#await import(`$assets/plane.svg?raw`) then { default: renderSvg }}
 					<div style="color: var(--color-primary-900);">
-						{@html renderIcon}
+						{@html renderSvg}
 					</div>
 				{/await}
 			</div>
@@ -20,16 +20,19 @@
 				</div>
 			</div>
 		</div>
-		<div class="flex rounded-2xl" style="background-color: var(--color-primary-100);">
-			<div class="block">
+		<div
+			class="flex rounded-2xl max-xl:grid max-xl:grid-cols-2"
+			style="background-color: var(--color-primary-100);"
+		>
+			<div class="block border-r border-stone-950/15 max-xl:border-b">
 				<div class="title">560,000+</div>
 				<div class="description">Daily users on the platform</div>
 			</div>
-			<div class="block border-x" style="border-color: #00000015">
+			<div class="block border-stone-950/15 max-xl:border-b xl:border-r">
 				<div class="title">0%</div>
 				<div class="description">Service fee</div>
 			</div>
-			<div class="block border-r" style="border-color: #00000015">
+			<div class="block border-r border-stone-950/15">
 				<div class="title">99.973%</div>
 				<div class="description">Uptime guarantee</div>
 			</div>

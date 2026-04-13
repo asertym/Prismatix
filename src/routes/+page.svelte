@@ -6,26 +6,9 @@
 	import { copyRender, copyFigma, nameThatColor, tweakColor } from '$lib/utils';
 	import Color from 'colorjs.io';
 	import { SvelteURLSearchParams } from 'svelte/reactivity';
+	import { goto } from '$app/navigation';
 
-	let color = $state('#4F6814'); // default selected color
-	let c = $derived(new Color(color));
-	let colorName = $derived(nameThatColor(color));
-	let preserve = $state(true); // preserve input shade
-	let palette = $derived.by(() => {
-		// Only compute palette in browser environment
-		if (typeof document === 'undefined') {
-			return {};
-		}
-		return generateColor(tweakColor(c, nudgeH, nudgeS), preserve, shades, outputValue);
-	}); // object declaration
-	// let exportName = $state('primary'); //export name
-	let copy = $state(false); // is shade copied?
-
-	let themeRender = $state(); // bind for component
-
-	let renderType = $state('tw4'); // default value selected
-	let outputValue = $state('oklch'); // default value selected
-
+	// -- Constants --
 	let shades = [
 		{ name: '50', lightness: '95' },
 		{ name: '100', lightness: '90' },
@@ -40,13 +23,34 @@
 		{ name: '950', lightness: '5' }
 	];
 
-	// Initialize with default color values
-	const defaultColor = new Color('#4F6814');
-	let baseH = $derived(c.hsl.h),
-		baseS = $derived(c.hsl.s),
-		nudgeH = $state(defaultColor.hsl.h),
-		nudgeS = $state(defaultColor.hsl.s);
+	// --- Core Color State ---
+	let color = $state('#4F6814');
+	let c = $derived(new Color(color));
+	let colorName = $derived(nameThatColor(color));
+	let preserve = $state(true);
+	let baseH = $derived(c.hsl.h);
+	let baseS = $derived(c.hsl.s);
 
+	// --- Config State ---
+	let renderType = $state('tw4');
+	let outputValue = $state('oklch');
+	let nudgeH = $derived(baseH);
+	let nudgeS = $derived(baseS);
+
+	// --- UI Related ---
+	let copy = $state(false);
+	let themeRender = $state();
+	let showSettings = $state(false);
+	let showExport = $state(false);
+
+	let palette = $derived.by(() => {
+		if (typeof document === 'undefined') {
+			return {};
+		}
+		return generateColor(tweakColor(c, nudgeH, nudgeS), preserve, shades, outputValue);
+	});
+
+	// --- Init & URL Sync ---
 	function initParams() {
 		if (typeof window !== 'undefined') {
 			const params = new URLSearchParams(window.location.search);
@@ -82,23 +86,6 @@
 		}
 	}
 
-	// Update URL when palette values change
-	function updateShareUrl() {
-		if (typeof window !== 'undefined') {
-			const params = new SvelteURLSearchParams();
-			params.set('color', color);
-			params.set('hue', Math.round(nudgeH.toString()));
-			params.set('saturation', Math.round(nudgeS.toString()));
-			params.set('format', outputValue);
-
-			const newUrl = `${window.location.pathname}?${params.toString()}`;
-			window.history.replaceState({}, '', newUrl);
-		}
-	}
-
-	let showSettings = $state(false);
-	let showExport = $state(false);
-
 	function randomColor() {
 		const hue = Math.random() * 360;
 		const sat = 15 + Math.random() * 85;
@@ -106,18 +93,18 @@
 
 		color = new Color(`hsl(${hue}, ${sat}%, ${lig}%)`).toString({ format: 'hex' });
 
-		resetConfig(hue, sat);
-		updateShareUrl();
+		resetConfig();
 	}
 
-	function resetConfig(hue, sat) {
-		nudgeH = hue;
-		nudgeS = sat;
-	}
-
-	function newInput() {
-		resetConfig(baseH, baseS);
-		updateShareUrl();
+	function resetConfig(which) {
+		if (which == 'hue') {
+			nudgeH = baseH;
+		} else if (which == 'sat') {
+			nudgeS = baseS;
+		} else {
+			nudgeH = baseH;
+			nudgeS = baseS;
+		}
 	}
 
 	function handlePaste(e) {
@@ -131,20 +118,24 @@
 			pastedText = `#${pastedText}`;
 		}
 		color = pastedText;
-	}
-
-	function revertHue() {
-		nudgeH = baseH;
-		updateShareUrl();
-	}
-
-	function revertSat() {
-		nudgeS = baseS;
-		updateShareUrl();
+		resetConfig();
 	}
 
 	$effect(() => {
 		initParams();
+	});
+	$effect(() => {
+		const params = new SvelteURLSearchParams();
+		params.set('color', color);
+		params.set('hue', Math.round(nudgeH).toString());
+		params.set('saturation', Math.round(nudgeS).toString());
+		params.set('format', outputValue);
+
+		const newUrl = `?${params.toString()}`;
+		if (window.location.search !== `?${params.toString()}`) {
+			// eslint-disable-next-line svelte/no-navigation-without-resolve
+			goto(newUrl, { replaceState: true, noScroll: true, keepFocus: true });
+		}
 	});
 </script>
 
@@ -155,7 +146,7 @@
 	</div>
 
 	<!-- Palette showcase -->
-	<div class="mb-36">
+	<div class="mb-36 max-xl:mb-24">
 		<div class="mb-2 flex items-center justify-between">
 			<div>
 				Palette 1 <span class="capitalize">({colorName})</span>
@@ -164,7 +155,6 @@
 				<Input
 					type="radio"
 					bind:family={outputValue}
-					onchange={updateShareUrl}
 					options={[
 						{ label: 'OKLCH', value: 'oklch' },
 						{ label: 'HSL', value: 'hsl' },
@@ -203,7 +193,7 @@
 	</div>
 
 	<!-- Components -->
-	<div class="mb-36">
+	<div class="mb-36 max-xl:mb-24">
 		<div class="space-y-36">
 			<!-- Components here -->
 			<Works />
@@ -226,7 +216,7 @@
 				class="pointer-events-auto cursor-pointer opacity-0"
 				type="color"
 				bind:value={color}
-				onchange={newInput}
+				onchange={resetConfig}
 			/>
 			<div
 				class="absolute inset-0 -z-10 h-8 w-8 rounded-lg"
@@ -238,7 +228,6 @@
 			class="pointer-events-auto w-48 text-center"
 			bind:value={color}
 			onpaste={handlePaste}
-			onchange={updateShareUrl}
 		/>
 	</div>
 	<div>
@@ -280,7 +269,9 @@
 								{#if nudgeH !== baseH}
 									<button
 										class="ml-2 cursor-pointer rounded-sm border border-stone-400 px-1"
-										onclick={revertHue}>Revert</button
+										onclick={() => {
+											resetConfig('hue');
+										}}>Revert</button
 									>
 								{/if}
 							</span>
@@ -291,7 +282,6 @@
 							min="0"
 							max="360"
 							bind:value={nudgeH}
-							onchange={updateShareUrl}
 							class="h-1.5 w-full cursor-pointer appearance-none rounded-lg bg-stone-200 accent-stone-800"
 						/>
 					</div>
@@ -303,7 +293,9 @@
 								{#if nudgeS !== baseS}
 									<button
 										class="ml-2 cursor-pointer rounded-sm border border-stone-400 px-1"
-										onclick={revertSat}>Revert</button
+										onclick={() => {
+											resetConfig('sat');
+										}}>Revert</button
 									>
 								{/if}
 							</span>
@@ -314,7 +306,6 @@
 							min="0"
 							max="100"
 							bind:value={nudgeS}
-							onchange={updateShareUrl}
 							class="h-1.5 w-full cursor-pointer appearance-none rounded-lg bg-stone-200 accent-stone-800"
 						/>
 					</div>
@@ -356,7 +347,6 @@
 					<Input
 						type="radio"
 						bind:family={outputValue}
-						onchange={updateShareUrl}
 						options={[
 							{ label: 'OKLCH', value: 'oklch' },
 							{ label: 'HSL', value: 'hsl' },

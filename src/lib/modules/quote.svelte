@@ -4,30 +4,40 @@
 	import Author from '$assets/author.jpg';
 </script>
 
-<div class="grid grid-cols-12 gap-6 text-stone-950">
-	<div class="col-span-7 flex flex-col justify-center space-y-6">
-		<div class="icon">
-			<Icon name="quote" size="64px" />
-		</div>
-		<div class="quote text-[32px] leading-relaxed font-medium">
-			“Excellent tool, no issues at all. This product is so cool, I can’t believe I used to live
-			without it up until this point. My life was a lie, and I have to reconsider some of my
-			long-term career decisions.”
-		</div>
-		<div class="author flex items-center gap-6">
-			<div class="image overflow-hidden rounded-full">
-				<img src={Author} alt="" />
-			</div>
-			<div class="space-y-2">
-				<div class="text-xl font-semibold">Real Reviewer</div>
-				<div class="role">Product Designer (influencer)</div>
-			</div>
-		</div>
+<div class="space-y-4 max-xl:space-y-2">
+	<div class="icon">
+		<Icon name="quote" class="max-xl:size-11!" size="64px" />
 	</div>
-	<div class="abstract col-span-4 col-start-9">
-		{#await import(`$assets/abstract.svg?raw`) then { default: renderIcon }}
-			{@html renderIcon}
-		{/await}
+	<div class="grid grid-cols-12 gap-6 text-stone-950">
+		<div
+			class="z-10 col-start-1 col-end-9 flex flex-col justify-center space-y-6 max-xl:col-end-11"
+			style="grid-row: 1;"
+		>
+			<div
+				class="quote text-[32px] leading-relaxed font-medium max-xl:text-2xl max-xl:leading-normal"
+			>
+				“Excellent tool, no issues at all. This product is so cool, I can’t believe I used to live
+				without it up until this point. My life was a lie, and I have to reconsider some of my
+				long-term career decisions.”
+			</div>
+			<div class="author flex items-center gap-6 max-xl:gap-4">
+				<div class="image overflow-hidden rounded-full max-xl:size-16">
+					<img src={Author} alt="author placeholder" />
+				</div>
+				<div class="space-y-2 max-xl:space-y-1">
+					<div class="text-xl font-semibold max-xl:text-lg">Real Reviewer</div>
+					<div class="role">Product Designer (influencer)</div>
+				</div>
+			</div>
+		</div>
+		<div
+			class="abstract col-span-4 col-start-9 max-xl:col-span-6 max-xl:col-start-8"
+			style="grid-row: 1;"
+		>
+			{#await import(`$assets/abstract.svg?raw`) then { default: renderIcon }}
+				{@html renderIcon}
+			{/await}
+		</div>
 	</div>
 </div>
 
@@ -41,5 +51,11 @@
 
 	.icon {
 		color: var(--color-primary-900);
+	}
+
+	.quote {
+		background: linear-gradient(45deg, var(--color-primary-800), var(--color-primary-900));
+		-webkit-text-fill-color: transparent;
+		background-clip: text;
 	}
 </style>

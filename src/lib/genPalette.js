@@ -21,7 +21,6 @@ export const generateColor = (input, preserve, shades, format) => {
 	});
 
 	const obj = shades.reduce((obj, { name, lightness }) => {
-		console.log(difference);
 		let adjustedL = Number(lightness) + Number(difference % 1);
 
 		const newColor = new Color(`hsl(${baseH} ${baseS} ${adjustedL})`);
