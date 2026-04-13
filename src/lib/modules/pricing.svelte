@@ -44,7 +44,7 @@
 		<!-- Pro Plan -->
 		<div
 			class="flex flex-col rounded-3xl border-2 bg-white p-8 shadow-md transition-shadow hover:shadow-lg"
-			style="border-color: var(--color-primary-600);"
+			style="border-color: var(--color-primary-600); --tw-shadow-color: var(--color-primary-100)"
 		>
 			<div class="mb-4 flex items-center justify-between">
 				<h3 class="text-xl font-semibold text-stone-900">Pro</h3>
@@ -107,7 +107,7 @@
 					Dedicated manager
 				</li>
 			</ul>
-			<Button class="w-full py-3" color="stone" href="#">Contact Sales</Button>
+			<Button class="w-full py-3" color="primary" href="#">Contact Sales</Button>
 		</div>
 	</div>
 </div>

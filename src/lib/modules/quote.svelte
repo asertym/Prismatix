@@ -5,7 +5,7 @@
 </script>
 
 <div class="space-y-4 max-xl:space-y-2">
-	<div class="icon">
+	<div class="icon relative xl:top-12">
 		<Icon name="quote" class="max-xl:size-11!" size="64px" />
 	</div>
 	<div class="grid grid-cols-12 gap-6 text-stone-950">
