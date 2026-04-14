@@ -8,6 +8,7 @@
 	import { SvelteURLSearchParams } from 'svelte/reactivity';
 	import { goto } from '$app/navigation';
 	import ColorPicker from 'svelte-awesome-color-picker';
+	import { onMount } from 'svelte';
 
 	// -- Constants --
 	let shades = [
@@ -27,6 +28,7 @@
 	// --- Core Color State ---
 	let color = $state('#4F6814');
 	let c = $derived(new Color(color));
+	let newInput = $state('');
 	let colorName = $derived(nameThatColor(color));
 	let preserve = $state(true);
 	let baseH = $derived(c.hsl.h);
@@ -109,9 +111,6 @@
 	}
 
 	$effect(() => {
-		initParams();
-	});
-	$effect(() => {
 		const params = new SvelteURLSearchParams();
 		params.set('color', color);
 		params.set('hue', Math.round(nudgeH).toString());
@@ -124,12 +123,19 @@
 			goto(newUrl, { replaceState: true, noScroll: true, keepFocus: true });
 		}
 	});
+	onMount(() => {
+		initParams();
+	});
+
 	$effect(() => {
-		resetConfig(color);
-		document.documentElement.style.setProperty(
-			`--input-color`,
-			c.to('hsl').set('s', 100).set('l', 50).toString({ format: 'hex' })
-		);
+		if (newInput) {
+			color = newInput;
+			resetConfig();
+			document.documentElement.style.setProperty(
+				`--input-color`,
+				c.to('hsl').set('s', 100).set('l', 50).toString({ format: 'hex' })
+			);
+		}
 	});
 </script>
 
@@ -217,7 +223,7 @@
 			</div>
 			<div class="absolute inset-0 z-10 inline-block">
 				<ColorPicker
-					bind:hex={color}
+					bind:hex={newInput}
 					isAlpha={false}
 					position="responsive"
 					sliderDirection="horizontal"
