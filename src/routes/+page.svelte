@@ -7,6 +7,7 @@
 	import Color from 'colorjs.io';
 	import { SvelteURLSearchParams } from 'svelte/reactivity';
 	import { goto } from '$app/navigation';
+	import ColorPicker from 'svelte-awesome-color-picker';
 
 	// -- Constants --
 	let shades = [
@@ -107,20 +108,6 @@
 		}
 	}
 
-	function handlePaste(e) {
-		e.preventDefault();
-		let pastedText = e.clipboardData.getData('text').trim();
-		if (
-			pastedText &&
-			!pastedText.startsWith('#') &&
-			/^[0-9A-Fa-f]{3}$|^[0-9A-Fa-f]{6}$/.test(pastedText)
-		) {
-			pastedText = `#${pastedText}`;
-		}
-		color = pastedText;
-		resetConfig();
-	}
-
 	$effect(() => {
 		initParams();
 	});
@@ -136,6 +123,13 @@
 			// eslint-disable-next-line svelte/no-navigation-without-resolve
 			goto(newUrl, { replaceState: true, noScroll: true, keepFocus: true });
 		}
+	});
+	$effect(() => {
+		resetConfig(color);
+		document.documentElement.style.setProperty(
+			`--input-color`,
+			c.to('hsl').set('s', 100).set('l', 50).toString({ format: 'hex' })
+		);
 	});
 </script>
 
@@ -207,28 +201,30 @@
 
 <!-- Sticky bottom container -->
 <div
-	class="box box-sm pointer-events-none fixed right-0 bottom-4 left-0 z-20 container mx-auto flex items-center justify-between rounded-xl border border-stone-200 bg-white/75 px-4 py-3 backdrop-blur-lg"
+	class="box box-sm pointer-events-none fixed right-0 bottom-4 left-0 z-20 container mx-auto flex items-stretch justify-between rounded-xl border border-stone-200 bg-white/75 px-6 py-5 backdrop-blur-lg"
 >
 	<!-- Color input -->
-	<div class="relative flex items-center">
-		<div class="absolute left-2 z-10 inline-block h-8 w-8 overflow-hidden">
-			<input
-				class="pointer-events-auto cursor-pointer opacity-0"
-				type="color"
-				bind:value={color}
-				onchange={resetConfig}
-			/>
+	<div class="pointer-events-auto flex items-center">
+		<div
+			class="group relative flex h-full w-54 items-center rounded-lg"
+			style={`background-color: ${color}`}
+		>
 			<div
-				class="absolute inset-0 -z-10 h-8 w-8 rounded-lg"
-				style={`background-color: ${color}`}
-			></div>
+				class="picker-label w-full text-center opacity-0 transition-opacity duration-150 group-hover:opacity-100"
+				style={`--background: ${color}`}
+			>
+				{color}
+			</div>
+			<div class="absolute inset-0 z-10 inline-block">
+				<ColorPicker
+					bind:hex={color}
+					isAlpha={false}
+					position="responsive"
+					sliderDirection="horizontal"
+					label=""
+				/>
+			</div>
 		</div>
-		<Input
-			type="text"
-			class="pointer-events-auto w-48 text-center"
-			bind:value={color}
-			onpaste={handlePaste}
-		/>
 	</div>
 	<div>
 		<div class="space-x-2">
@@ -388,7 +384,8 @@
 		background: var(--background);
 		color: transparent;
 	}
-	.atlas:hover {
+	.atlas:hover,
+	.picker-label {
 		color: oklch(from var(--background) round(1.21 - L) 0 0);
 	}
 </style>

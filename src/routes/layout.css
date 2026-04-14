@@ -31,3 +31,73 @@
 .box-lg {
 	--size: 4px;
 }
+
+.color-picker {
+	@apply inline-block size-full;
+}
+.color-picker label {
+	@apply m-auto! size-full!;
+}
+
+.color-picker label > .container {
+	opacity: 0;
+}
+.color-picker .wrapper.is-open {
+	@apply flex flex-col;
+	animation: popover 100ms ease-out forwards;
+}
+
+.wrapper {
+	@apply m-0! space-y-3 border border-stone-300! shadow-lg;
+}
+
+@keyframes popover {
+	0% {
+		opacity: 0;
+		transform: scale(1);
+	}
+	1% {
+		opacity: 0;
+		transform: scale(0.9);
+	}
+	100% {
+		opacity: 100;
+		transform: scale(1);
+	}
+}
+
+.wrapper .slider {
+	--track-height: 14px;
+	--thumb-size: 20px;
+	width: 100% !important;
+	max-width: 100% !important;
+	margin-inline: 0 !important;
+}
+
+.h .thumb {
+	@apply relative flex items-center justify-center border-stone-400!;
+}
+
+.h .thumb:after {
+	content: '';
+	@apply absolute block size-2.5 rounded-full;
+	background-color: var(--input-color);
+}
+
+.horizontal .h {
+	margin-left: 0 !important;
+	margin-right: 0 !important;
+	margin-top: 0 !important;
+}
+
+.color-picker .text-input input {
+	@apply border border-stone-300 py-4!;
+	--focus-color: transparent;
+}
+.color-picker .text-input input:focus {
+	@apply border-blue-500 ring-0;
+}
+
+.color-picker .text-input button {
+	@apply py-4;
+}
