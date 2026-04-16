@@ -6,9 +6,9 @@
 	import { copyRender, copyFigma, nameThatColor, tweakColor } from '$lib/utils';
 	import Color from 'colorjs.io';
 	import { SvelteURLSearchParams } from 'svelte/reactivity';
-	import { goto } from '$app/navigation';
 	import ColorPicker from 'svelte-awesome-color-picker';
 	import { onMount } from 'svelte';
+	import { replaceState } from '$app/navigation';
 
 	// --- Constants ---
 	let shades = [
@@ -107,17 +107,18 @@
 			nudgeS = baseS;
 		}
 	}
-
 	$effect(() => {
-		const params = new SvelteURLSearchParams();
-		params.set('color', color);
-		params.set('hue', Math.round(nudgeH).toString());
-		params.set('saturation', Math.round(nudgeS).toString());
-		params.set('format', outputValue);
+		if (newInput) {
+			const params = new SvelteURLSearchParams();
+			params.set('color', color);
+			params.set('hue', Math.round(nudgeH).toString());
+			params.set('saturation', Math.round(nudgeS).toString());
+			params.set('format', outputValue);
 
-		const newUrl = `?${params.toString()}`;
-		if (window.location.search !== `?${params.toString()}`) {
-			goto(newUrl, { replaceState: true, noScroll: true, keepFocus: true });
+			const newUrl = `?${params.toString()}`;
+			if (window.location.search !== `?${params.toString()}`) {
+				replaceState(newUrl, {});
+			}
 		}
 	});
 	onMount(() => {
