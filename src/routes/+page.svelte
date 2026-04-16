@@ -1,6 +1,6 @@
 <script>
 	import { Input, Button, Icon } from '$components';
-	import { Bentos, Quote, Stats, Works, Pricing } from '$modules';
+	import { Bentos, Quote, Hero, Stats, Works, Pricing } from '$modules';
 	import configRender from '$lib/exportRender';
 	import { generateColor } from '$lib/genPalette';
 	import { copyRender, copyFigma, nameThatColor, tweakColor } from '$lib/utils';
@@ -10,7 +10,7 @@
 	import ColorPicker from 'svelte-awesome-color-picker';
 	import { onMount } from 'svelte';
 
-	// -- Constants --
+	// --- Constants ---
 	let shades = [
 		{ name: '50', lightness: '95' },
 		{ name: '100', lightness: '90' },
@@ -53,24 +53,22 @@
 		return generateColor(tweakColor(c, nudgeH, nudgeS), preserve, shades, outputValue);
 	});
 
-	// --- Init & URL Sync ---
 	function initParams() {
 		if (typeof window !== 'undefined') {
 			const params = new URLSearchParams(window.location.search);
 
-			// Extract color from URL
+			// Color
 			const urlColor = params.get('color');
 			if (urlColor) {
 				try {
-					// Validate it's a valid color
-					new Color(urlColor);
+					new Color(urlColor); // for validation
 					color = urlColor;
 				} catch {
 					console.warn('Invalid color in URL:', urlColor);
 				}
 			}
 
-			// Extract hue and saturation from URL
+			// Config
 			const urlHue = params.get('hue');
 			const urlSat = params.get('saturation');
 
@@ -81,7 +79,7 @@
 				nudgeS = parseFloat(urlSat);
 			}
 
-			// Extract output format from URL
+			// Format
 			const urlFormat = params.get('format');
 			if (urlFormat && ['oklch', 'hsl', 'hex'].includes(urlFormat)) {
 				outputValue = urlFormat;
@@ -94,7 +92,7 @@
 		const sat = 15 + Math.random() * 85;
 		const lig = 20 + Math.random() * 80;
 
-		color = new Color(`hsl(${hue}, ${sat}%, ${lig}%)`).toString({ format: 'hex' });
+		newInput = new Color(`hsl(${hue}, ${sat}%, ${lig}%)`).toString({ format: 'hex' });
 
 		resetConfig();
 	}
@@ -119,7 +117,6 @@
 
 		const newUrl = `?${params.toString()}`;
 		if (window.location.search !== `?${params.toString()}`) {
-			// eslint-disable-next-line svelte/no-navigation-without-resolve
 			goto(newUrl, { replaceState: true, noScroll: true, keepFocus: true });
 		}
 	});
@@ -139,11 +136,8 @@
 	});
 </script>
 
-<div class="container mx-auto space-y-12 p-4">
-	<div class="my-24 space-y-4">
-		<h1 class="text-7xl font-bold tracking-tight">Palette generator</h1>
-		<h2 class="text-xl text-stone-700">Create, preview, and export your CSS palette</h2>
-	</div>
+<div class="container mx-auto space-y-12">
+	<Hero title="Palette generator" description="Create, preview, and export your CSS palette"></Hero>
 
 	<!-- Palette showcase -->
 	<div class="mb-36 max-xl:mb-24">
@@ -258,19 +252,19 @@
 			>
 				<div class="flex flex-col space-y-4">
 					<div class="space-y-1">
-						<span class="ml-1 text-[10px] font-bold tracking-wider text-stone-400 uppercase"
+						<span class="ml-1 text-[10px] font-bold tracking-wider text-stone-500 uppercase"
 							>Name</span
 						>
-						<Input type="text" name="name" placeholder="name" bind:value={colorName} class="h-9" />
+						<Input type="text" name="name" placeholder="name" bind:value={colorName} class="" />
 					</div>
 
 					<div class="space-y-1">
 						<div class="flex h-4 items-center justify-between px-1">
-							<span class="text-[10px] font-bold tracking-wider text-stone-400 uppercase">
+							<span class="text-[10px] font-bold tracking-wider text-stone-500 uppercase">
 								Hue
 								{#if nudgeH !== baseH}
 									<button
-										class="ml-2 cursor-pointer rounded-sm border border-stone-400 px-1"
+										class="ml-2 cursor-pointer rounded-sm border border-stone-500 px-1"
 										onclick={() => {
 											resetConfig('hue');
 										}}>Revert</button
@@ -290,11 +284,11 @@
 
 					<div class="space-y-1">
 						<div class="flex h-4 items-center justify-between px-1">
-							<span class="text-[10px] font-bold tracking-wider text-stone-400 uppercase">
+							<span class="text-[10px] font-bold tracking-wider text-stone-500 uppercase">
 								Saturation
 								{#if nudgeS !== baseS}
 									<button
-										class="ml-2 cursor-pointer rounded-sm border border-stone-400 px-1"
+										class="ml-2 cursor-pointer rounded-sm border border-stone-500 px-1"
 										onclick={() => {
 											resetConfig('sat');
 										}}>Revert</button

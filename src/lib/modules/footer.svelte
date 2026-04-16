@@ -3,9 +3,9 @@
 	import ProductHunt from '$assets/featured.svg';
 </script>
 
-<div class="container mx-auto mb-36 rounded-2xl bg-stone-100 px-10 py-16">
+<div class="container mx-auto mb-36 rounded-2xl bg-stone-50 px-10 py-16">
 	<div class="space-y-8 border-b border-stone-300 pb-12 text-lg">
-		<div><img src={Logo} alt="" /></div>
+		<div><img src={Logo} alt="Prismatix" /></div>
 		<div class="grid gap-6 max-xl:space-y-12 xl:grid-cols-3">
 			<div class="space-y-8">
 				<div>Visualize your palette</div>

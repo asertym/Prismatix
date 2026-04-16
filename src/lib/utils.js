@@ -32,3 +32,27 @@ export function handlePaste(e) {
 
 	return pastedData;
 }
+
+export function hexToRgb(hex) {
+	const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+	return result
+		? {
+				r: parseInt(result[1], 16),
+				g: parseInt(result[2], 16),
+				b: parseInt(result[3], 16)
+			}
+		: null;
+}
+
+export function luminance(r, g, b) {
+	let a = [r, g, b].map((v) => {
+		v /= 255;
+		return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4);
+	});
+	return a[0] * 0.2126 + a[1] * 0.7152 + a[2] * 0.0722;
+}
+
+export function PXtoPT(px, failedMessage) {
+	if (typeof px == 'number') return (px * (72 / 96)).toFixed(2);
+	return failedMessage;
+}

@@ -27,15 +27,15 @@
 			<ul class="mb-8 flex-1 space-y-4 text-sm text-stone-600">
 				<li class="flex items-center">
 					<Icon name="check" size="18px" class="mr-3" style="color: var(--color-primary-600);" />
-					Basic features
+					Generate everything
 				</li>
 				<li class="flex items-center">
 					<Icon name="check" size="18px" class="mr-3" style="color: var(--color-primary-600);" />
-					Up to 3 projects
+					Export all you want
 				</li>
 				<li class="flex items-center">
 					<Icon name="check" size="18px" class="mr-3" style="color: var(--color-primary-600);" />
-					Community support
+					Life is good
 				</li>
 			</ul>
 			<Button class="w-full py-3" color="primary" href="#">Get Started</Button>
@@ -73,7 +73,7 @@
 				</li>
 				<li class="flex items-center">
 					<Icon name="check" size="18px" class="mr-3" style="color: var(--color-primary-600);" />
-					Advanced analytics
+					Life is even better
 				</li>
 			</ul>
 			<Button class="w-full py-3" color="primary" href="#">Start Free Trial</Button>
@@ -100,11 +100,11 @@
 				</li>
 				<li class="flex items-center">
 					<Icon name="check" size="18px" class="mr-3" style="color: var(--color-primary-600);" />
-					Custom integrations
+					Free beer for life
 				</li>
 				<li class="flex items-center">
 					<Icon name="check" size="18px" class="mr-3" style="color: var(--color-primary-600);" />
-					Dedicated manager
+					What more could you want
 				</li>
 			</ul>
 			<Button class="w-full py-3" color="primary" href="#">Contact Sales</Button>

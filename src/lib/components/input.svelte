@@ -17,7 +17,7 @@
 	} = $props();
 </script>
 
-<div class="relative my-2">
+<div class="relative my-2 w-full">
 	{#if type == 'textarea'}
 		<!-- Textarea -->
 		<div class="textarea-wrapper grid">
@@ -113,7 +113,7 @@
 	.input,
 	.select {
 		--element-color: var(--color-stone-100);
-		@apply rounded-xl border border-stone-200 bg-stone-50 px-4 py-2 text-emerald-950;
+		@apply rounded-xl border border-stone-200 bg-white px-4 py-2 text-emerald-950;
 	}
 
 	.radio:checked + .radio-ui {
