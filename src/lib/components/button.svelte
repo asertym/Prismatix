@@ -47,9 +47,8 @@
 	@reference 'tailwindcss';
 
 	.button {
-		@apply rounded-xl;
+		@apply cursor-pointer rounded-xl;
 		background-color: var(--element-color);
-		cursor: pointer;
 		color: var(--label-color);
 	}
 

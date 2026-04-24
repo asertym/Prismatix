@@ -21,7 +21,9 @@
 
 <svelte:head><link rel="icon" href={favicon} /></svelte:head>
 <Header />
-{@render children()}
+<div class="content">
+	{@render children()}
+</div>
 <Footer />
 
 <style>
@@ -49,15 +51,19 @@
 		}
 	}
 
-	:root::view-transition-old(root) {
+	:root::view-transition-old(content) {
 		animation:
 			90ms cubic-bezier(0.4, 0, 1, 1) both fade-out,
 			300ms cubic-bezier(0.4, 0, 0.2, 1) both slide-to-left;
 	}
 
-	:root::view-transition-new(root) {
+	:root::view-transition-new(content) {
 		animation:
 			210ms cubic-bezier(0, 0, 0.2, 1) 90ms both fade-in,
 			300ms cubic-bezier(0.4, 0, 0.2, 1) both slide-from-right;
+	}
+
+	.content {
+		view-transition-name: content;
 	}
 </style>

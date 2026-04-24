@@ -1,12 +1,12 @@
 <script>
 	/* eslint-disable svelte/no-at-html-tags */
 	import { Icon } from '$components';
-	import Author from '$assets/author.jpg';
+	import Author from '$assets/author.webp';
 </script>
 
 <div class="space-y-4 max-xl:space-y-2">
 	<div class="icon relative xl:top-12">
-		<Icon name="quote" class="max-xl:size-11!" size="64px" />
+		<Icon name="quote" class="max-xl:size-11!" size="64px" aria-hidden="true" />
 	</div>
 	<div class="grid grid-cols-12 gap-6 text-stone-950">
 		<div
@@ -16,13 +16,15 @@
 			<div
 				class="quote text-[32px] leading-relaxed font-medium max-xl:text-2xl max-xl:leading-normal"
 			>
-				“Excellent tool, no issues at all. This product is so cool, I can’t believe I used to live
-				without it up until this point. My life was a lie, and I have to reconsider some of my
-				long-term career decisions.”
+				<quote>
+					“Excellent tool, no issues at all. This product is so cool, I can’t believe I used to live
+					without it up until this point. My life was a lie, and I have to reconsider some of my
+					long-term career decisions.”
+				</quote>
 			</div>
 			<div class="author flex items-center gap-6 max-xl:gap-4">
 				<div class="image overflow-hidden rounded-full max-xl:size-16">
-					<img src={Author} alt="author placeholder" />
+					<img src={Author} alt="A real reviewer" />
 				</div>
 				<div class="space-y-2 max-xl:space-y-1">
 					<div class="text-xl font-semibold max-xl:text-lg">Real Reviewer</div>

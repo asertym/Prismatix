@@ -26,15 +26,33 @@
 			</div>
 			<ul class="mb-8 flex-1 space-y-4 text-sm text-stone-600">
 				<li class="flex items-center">
-					<Icon name="check" size="18px" class="mr-3" style="color: var(--color-primary-600);" />
+					<Icon
+						name="check"
+						size="18px"
+						class="mr-3"
+						style="color: var(--color-primary-600);"
+						aria-hidden="true"
+					/>
 					Generate everything
 				</li>
 				<li class="flex items-center">
-					<Icon name="check" size="18px" class="mr-3" style="color: var(--color-primary-600);" />
+					<Icon
+						name="check"
+						size="18px"
+						class="mr-3"
+						style="color: var(--color-primary-600);"
+						aria-hidden="true"
+					/>
 					Export all you want
 				</li>
 				<li class="flex items-center">
-					<Icon name="check" size="18px" class="mr-3" style="color: var(--color-primary-600);" />
+					<Icon
+						name="check"
+						size="18px"
+						class="mr-3"
+						style="color: var(--color-primary-600);"
+						aria-hidden="true"
+					/>
 					Life is good
 				</li>
 			</ul>
@@ -60,19 +78,43 @@
 			</div>
 			<ul class="mb-8 flex-1 space-y-4 text-sm text-stone-600">
 				<li class="flex items-center">
-					<Icon name="check" size="18px" class="mr-3" style="color: var(--color-primary-600);" />
+					<Icon
+						name="check"
+						size="18px"
+						class="mr-3"
+						style="color: var(--color-primary-600);"
+						aria-hidden="true"
+					/>
 					All basic features
 				</li>
 				<li class="flex items-center">
-					<Icon name="check" size="18px" class="mr-3" style="color: var(--color-primary-600);" />
+					<Icon
+						name="check"
+						size="18px"
+						class="mr-3"
+						style="color: var(--color-primary-600);"
+						aria-hidden="true"
+					/>
 					Unlimited projects
 				</li>
 				<li class="flex items-center">
-					<Icon name="check" size="18px" class="mr-3" style="color: var(--color-primary-600);" />
+					<Icon
+						name="check"
+						size="18px"
+						class="mr-3"
+						style="color: var(--color-primary-600);"
+						aria-hidden="true"
+					/>
 					Priority support
 				</li>
 				<li class="flex items-center">
-					<Icon name="check" size="18px" class="mr-3" style="color: var(--color-primary-600);" />
+					<Icon
+						name="check"
+						size="18px"
+						class="mr-3"
+						style="color: var(--color-primary-600);"
+						aria-hidden="true"
+					/>
 					Life is even better
 				</li>
 			</ul>
@@ -95,15 +137,33 @@
 			</div>
 			<ul class="mb-8 flex-1 space-y-4 text-sm text-stone-600">
 				<li class="flex items-center">
-					<Icon name="check" size="18px" class="mr-3" style="color: var(--color-primary-600);" />
+					<Icon
+						name="check"
+						size="18px"
+						class="mr-3"
+						style="color: var(--color-primary-600);"
+						aria-hidden="true"
+					/>
 					Everything in Pro
 				</li>
 				<li class="flex items-center">
-					<Icon name="check" size="18px" class="mr-3" style="color: var(--color-primary-600);" />
+					<Icon
+						name="check"
+						size="18px"
+						class="mr-3"
+						style="color: var(--color-primary-600);"
+						aria-hidden="true"
+					/>
 					Free beer for life
 				</li>
 				<li class="flex items-center">
-					<Icon name="check" size="18px" class="mr-3" style="color: var(--color-primary-600);" />
+					<Icon
+						name="check"
+						size="18px"
+						class="mr-3"
+						style="color: var(--color-primary-600);"
+						aria-hidden="true"
+					/>
 					What more could you want
 				</li>
 			</ul>

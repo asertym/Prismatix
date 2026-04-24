@@ -10,9 +10,9 @@
 		<ul class="flex items-center space-x-8">
 			<li><a href="./">Palette Generator</a></li>
 			<li><a href="/contrast-checker">Contrast Checker</a></li>
-			<!-- <li></li>
-			<li></li>
-			<li></li> -->
+			<li><a href="/color-converter">Converter</a></li>
+			<li><a href="/gradient-generator">Gradient</a></li>
+			<li><a href="/image-picker">Image Picker</a></li>
 		</ul>
 	</div>
 </div>

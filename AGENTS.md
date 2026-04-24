@@ -1,55 +1,87 @@
-# Prismatix - Agent Documentation
+# AGENTS.md - Prismatix Repository Instructions
 
-## Project Overview
+You are able to use the Svelte MCP server, where you have access to comprehensive Svelte 5 and SvelteKit documentation. Here's how to use the available tools effectively:
 
-Prismatix is a sophisticated palette generator designed for both designers and developers. The application enables users to create, preview, and export CSS color palettes. The generation logic and color relationships are inspired by the design principles found in _Refactoring UI_ and follow the structural standards established by _Tailwind CSS_.
+## Available Svelte MCP Tools:
 
-A key feature of Prismatix is its interactive preview system: the application provides on-page components (modules) that dynamically update their styling to reflect the current active color palette, providing a real-world look at how colors work in a UI context.
+### 1. list-sections
 
-## Project Structure
+Use this FIRST to discover all available documentation sections. Returns a structured list with titles, use_cases, and paths.
+When asked about Svelte or SvelteKit topics, ALWAYS use this tool at the start of the chat to find relevant sections.
 
-The project follows a highly organized component-based architecture to promote reusability and clarity.
+### 2. get-documentation
 
-### Core Directories
+Retrieves full documentation content for specific sections. Accepts single or multiple sections.
+After calling the list-sections tool, you MUST analyze the returned documentation sections (especially the use_cases field) and then use the get-documentation tool to fetch ALL documentation sections that are relevant for the user's task.
 
-- `src/lib/components/`: Contains small, atomic UI elements. These are the building blocks of the application. They are designed to be low-level and highly reusable.
-- `src/lib/modules/`: Contains larger, more complex components that represent standalone sections or entire page layouts. These modules compose multiple elements from the `components` folder.
-- `src/routes/`: Contains the SvelteKit routing logic and page-level components.
-- `static/`: Holds static assets such as fonts, images, and robots.txt.
+### 3. svelte-autofixer
 
-### Automation & Imports
+Analyzes Svelte code and returns issues and suggestions.
+You MUST use this tool whenever writing Svelte code before sending it to the user. Keep calling it until no issues or suggestions are returned.
 
-To maintain clean import statements and reduce manual maintenance, the project uses an automated approach for barrel files:
+## Tech Stack
 
-- **`genImports.js`**: A utility script executed via Node.js. When run with a target directory (e.g., `node genImports.js components`), it scans the specified folder for `.svelte` files and generates an `index.js` file. This file automatically exports all found components using PascalCase naming conventions derived from their filenames.
+- **Framework**: Svelte 5 with Vite (SvelteKit)
+- **CSS**: Tailwind CSS 4
+- **Color Tools**: `colorjs.io`, `apca-w3`, `color-namer`, `nearest-color`
+- **Package Manager**: npm
 
-## Code Standards & Technologies
+## Core Directories
 
-### Tech Stack
+- `src/lib/components/`: Atomic UI elements (`Button`, `Icon`, `Input`, `Select`)
+- `src/lib/modules/`: Page-level sections (`Header`, `Footer`, `Hero`, `Pricing`, etc.)
+- `src/routes/`: SvelteKit routing and page components
+- `src/lib/assets/`: Static assets, icons
+- `static/`: Fonts, images, robots.txt
 
-- **Framework**: [Svelte 5](https://svelte.dev/) (utilizing Svelte Runes for reactivity).
-- **CSS Framework**: [Tailwind CSS 4](https://tailwindcss.com/).
-- **Build Tool**: [Vite](https://vitejs.dev/).
-- **Color Logic**: Powered by `colorjs.io`, `apca-w3`, and specialized palette generation utilities.
+## Commands
 
-### Development Standards
+| Command          | Purpose                      |
+| ---------------- | ---------------------------- |
+| `npm run dev`    | Start development server     |
+| `npm run build`  | Production build             |
+| `npm run lint`   | Check with Prettier + ESLint |
+| `npm run format` | Auto-format with Prettier    |
 
-- **Naming Conventions**:
-  - Component files: `.svelte` (e.g., `button.svelte`).
-  - Exported names in `index.js`: PascalCase (e.g., `Button`).
-- **Linting & Formatting**:
-  - **ESLint**: Used for code quality and identifying potential errors.
-  - **Prettier**: Enforces consistent code formatting.
-  - **Tailwind Plugin**: `prettier-plugin-tailwindcss` is used to ensure CSS classes are organized in a standard, predictable order.
-- **Component Pattern**:
-  - Prefer atomic design: Build small elements in `components/` before assembling them into `modules/`.
-  - Modules should be self-contained blocks of functionality or layout sections.
+## Critical Workflows
 
-## Workflow for Agents
+### Barrel File Generation
 
-When contributing to this project, agents should:
+After adding new `.svelte` files to `components/` or `modules/`, regenerate barrel exports:
 
-1. Use the `genImports.js` script whenever new components or modules are added to ensure the `index.js` barrels are up to date.
-2. Adhere to Svelte 5 rune syntax for all reactive logic.
-3. Ensure all Tailwind classes follow the standard sorting provided by the Prettier plugin.
-4. Maintain the separation between atomic `components` and structural `modules`.
+```bash
+node genImports.js components
+node genImports.js modules
+```
+
+### Lint Order Matters
+
+Run `npm run lint` which executes: `prettier --check . && eslint .`
+
+## Prettier Configuration
+
+- Single quotes, no trailing commas
+- 100 char print width
+- Tabs enabled (`useTabs: true`)
+- Tailwind CSS plugin sorting on `src/routes/layout.css`
+- Svelte files parsed with `parser: "svelte"`
+
+## SvelteKit Aliases
+
+```js
+$components → src/lib/components
+$modules → src/lib/modules
+$assets → src/lib/assets
+$icons → src/lib/assets/icons
+$styles → src/lib/styles/style.css
+```
+
+## Color Utilities Location
+
+Color-related utilities live in `src/lib/`:
+
+- `contrastCheck.js` - WCAG contrast checking
+- `genPalette.js` - Palette generation
+- `genSVG.js` - SVG color generation
+- `utils.js` - General utilities
+- `exportRender.js` - Export rendering helpers

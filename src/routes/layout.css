@@ -12,6 +12,10 @@
 	--default-font-family: 'Inter', sans-serif;
 }
 
+.swap-text {
+	color: oklch(from var(--background) round(1.21 - L) 0 0);
+}
+
 .box {
 	box-shadow:
 		0 calc(-1 * var(--size)) var(--size) 0 rgba(255, 255, 255, 0.5),

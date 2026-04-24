@@ -1,5 +1,5 @@
 <script>
-	import { Input, Button, Icon } from '$components';
+	import { Input, Button, Icon, InView } from '$components';
 	import { Bentos, Quote, Hero, Stats, Works, Pricing } from '$modules';
 	import configRender from '$lib/exportRender';
 	import { generateColor } from '$lib/genPalette';
@@ -191,18 +191,18 @@
 	<div class="mb-36 max-xl:mb-24">
 		<div class="space-y-36">
 			<!-- Components here -->
-			<Works />
-			<Stats />
-			<Bentos />
-			<Quote />
-			<Pricing />
+			<InView animation="slide-up"><Works /></InView>
+			<InView animation="slide-up"><Stats /></InView>
+			<InView animation="slide-up"><Bentos /></InView>
+			<InView animation="slide-up"><Quote /></InView>
+			<InView animation="slide-up"><Pricing /></InView>
 		</div>
 	</div>
 </div>
 
 <!-- Sticky bottom container -->
 <div
-	class="box box-sm pointer-events-none fixed right-0 bottom-4 left-0 z-20 container mx-auto flex items-stretch justify-between rounded-xl border border-stone-200 bg-white/75 px-6 py-5 backdrop-blur-lg"
+	class="box box-sm pointer-events-none fixed right-0 bottom-4 left-0 z-20 container mx-auto flex items-stretch justify-between rounded-xl border border-stone-200 bg-white px-6 py-5"
 >
 	<!-- Color input -->
 	<div class="pointer-events-auto flex items-center">

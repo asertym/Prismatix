@@ -1,5 +1,4 @@
 <script>
-	import { Icon } from '$components';
 	import { slide } from 'svelte/transition';
 
 	let {
@@ -10,6 +9,9 @@
 		class: className,
 		required = false,
 		placeholder,
+		min,
+		max,
+		step,
 		options = [],
 		error = false,
 		value = $bindable(),
@@ -17,7 +19,7 @@
 	} = $props();
 </script>
 
-<div class="relative my-2 w-full">
+<div class="align-center relative my-2 flex">
 	{#if type == 'textarea'}
 		<!-- Textarea -->
 		<div class="textarea-wrapper grid">
@@ -42,21 +44,15 @@
 		</div>
 	{:else if type == 'select'}
 		<!-- List -->
-		<div class="select relative">
-			<select {id} class="select hidden">
-				{#each options as { value, label } (value)}
-					<option {value}>{label}</option>
-				{/each}
-			</select>
-			<div class={className ?? ''} {...restProps}>
-				<span>Selected item</span>
-				<Icon name="caret-up-down"></Icon>
-			</div>
-		</div>
+		<select {id} class="select w-full" bind:value>
+			{#each options as { value, label } (value)}
+				<option {value}>{label}</option>
+			{/each}
+		</select>
 	{:else if type == 'toggle'}
 		<!-- Toggle Switch -->
 		<label
-			class="box box-sm switch-wrapper relative inline-block h-7 w-14 overflow-hidden rounded-full transition-all"
+			class="switch-wrapper relative inline-block h-7 w-14 overflow-hidden rounded-full transition-all"
 		>
 			<input
 				{...restProps}
@@ -83,6 +79,14 @@
 				</label>
 			{/each}
 		</div>
+	{:else if type == 'range'}
+		<label for={id} class="input-label">
+			{label}
+			{#if required}
+				<span class="required">*</span>
+			{/if}
+		</label>
+		<input {type} {min} {max} {step} bind:value />
 	{:else}
 		<!-- Email / Text -->
 		<div>
@@ -90,7 +94,7 @@
 				{...restProps}
 				{id}
 				{type}
-				class="input {error ? 'error' : ''} {className ?? ''}"
+				class="input w-full {error ? 'error' : ''} {className ?? ''}"
 				{placeholder}
 				bind:value
 			/>
@@ -128,15 +132,15 @@
 	}
 
 	.switch-wrapper {
-		--element-color: var(--color-primary-50);
-		--color-shadow: var(--color-primary-100);
-		--color-dot: var(--color-primary-400);
+		--element-color: var(--color-primary-50, var(--color-stone-200));
+		/* --color-shadow: var(--color-primary-100, var(--color-stone-200)); */
+		--color-dot: var(--color-primary-400, var(--color-stone-800));
 	}
 
 	.switch-wrapper:has(.switch:checked) {
-		--color-dot: var(--color-primary-50);
-		--element-color: var(--color-primary-400);
-		--color-shadow: var(--color-primary-500);
+		--color-dot: var(--color-primary-50, var(--color-stone-50));
+		--element-color: var(--color-primary-400, var(--color-stone-800));
+		/* --color-shadow: var(--color-primary-500, var(--color-stone-950)); */
 	}
 
 	.slider {
