@@ -2,7 +2,7 @@
 	import { Input, Icon } from '$components';
 	import { Hero } from '$modules';
 	import ColorPicker from 'svelte-awesome-color-picker';
-	import { nameThatColor } from '$lib/utils';
+	import { nameThatColor, copyValue } from '$lib/utils';
 	import Color from 'colorjs.io';
 	import convert from 'color-convert';
 
@@ -35,14 +35,10 @@
 		}))
 	);
 
-	function copyValue(value) {
-		navigator.clipboard.writeText(value);
-	}
-
 	$effect(() => {
 		if (autoCopy && inputColor) {
 			const currentValue = conversionsArray.find((f) => f.name == selectedFormat)?.value;
-			if (currentValue) copyValue(currentValue);
+			if (currentValue) copyValue(currentValue, `Auto-Copy: ${currentValue}`);
 		}
 	});
 </script>

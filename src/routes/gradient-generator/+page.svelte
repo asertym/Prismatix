@@ -1,7 +1,8 @@
 <script>
-	import { Gradpick, Input, Button } from '$components';
+	import { Gradpick, Input, Icon } from '$components';
 	import { Hero } from '$modules';
 	import { scale } from 'svelte/transition';
+	import { copyValue } from '$lib/utils';
 
 	let stops = $state([
 		{ id: 0, pos: 0, color: '#112A46' },
@@ -36,10 +37,6 @@
 	let rotation = $state('90');
 	let gradientType = $state('linear');
 
-	function updateType(type) {
-		gradientType = type;
-	}
-
 	$effect(() => {
 		gradientConfig();
 	});
@@ -53,23 +50,22 @@
 
 	<div class="layout-grid">
 		<!-- Left: Gradient Picker -->
-		<div class="rounded-lg bg-stone-50 p-6">
+		<div class="space-y-6 rounded-lg bg-stone-50 p-6">
 			<Gradpick bind:stops />
-			<div>
-				<div>Rotation</div>
-				<div><Input type="number" min="0" max="360" bind:value={rotation}></Input></div>
-			</div>
-			<div>
-				<div class="grid grid-cols-3 gap-6 space-x-4">
-					{#each gradientTypes as type, index (index)}
-						<Button
-							class="px-4 py-4"
-							color={gradientType === type ? 'blue' : ''}
-							onclick={() => updateType(type)}
-						>
-							{type}
-						</Button>
-					{/each}
+			<div class="grid grid-cols-2 gap-6">
+				<div>
+					<div class="text-sm">Rotation</div>
+					<div><Input type="number" min="0" max="360" bind:value={rotation}></Input></div>
+				</div>
+				<div>
+					<div class="text-sm">Type</div>
+					<div>
+						<Input
+							type="select"
+							bind:value={gradientType}
+							options={gradientTypes.map((type) => ({ value: type, label: type }))}
+						></Input>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -84,15 +80,29 @@
 				<!-- CSS Output -->
 				<div class="css-output">
 					<label>CSS</label>
-					<code class="css-code">{preview}</code>
+					<code class="relative block rounded bg-white p-3 font-mono text-sm text-stone-800">
+						<button
+							class="absolute top-2.5 right-3 cursor-pointer"
+							onclick={() => {
+								copyValue(preview);
+							}}
+						>
+							<Icon name="clipboard"></Icon>
+						</button>
+						{preview}
+					</code>
 				</div>
 
 				<!-- Color Swatches -->
 				<div class="swatches">
 					<h3 class="swatches-title">Stops</h3>
-					<div class="flex gap-6">
+					<div class="flex gap-4">
 						{#each sorted as stop (stop.id)}
-							<div class="swatch" transition:scale style="background: {stop.color}">
+							<div
+								class="swap-text flex size-12 items-center justify-center rounded font-mono text-sm"
+								transition:scale
+								style="--background: {stop.color}; background: var(--background)"
+							>
 								<span class="swatch-pos">{stop.pos}%</span>
 							</div>
 						{/each}
@@ -100,7 +110,7 @@
 				</div>
 
 				<!-- JSON Output -->
-				<div class="json-output">
+				<div class="json-output mt-8">
 					<label>JSON</label>
 					<pre class="json-code">{JSON.stringify(stops, null, 2)}</pre>
 				</div>
@@ -161,18 +171,6 @@
 		letter-spacing: 0.05em;
 	}
 
-	.css-code {
-		display: block;
-		background: #f3f4f6;
-		padding: 0.75rem;
-		border-radius: 6px;
-		font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Fira Code', monospace;
-		font-size: 13px;
-		color: #1f2937;
-		line-height: 1.5;
-		overflow-x: auto;
-	}
-
 	.json-code {
 		display: block;
 		background: #f3f4f6;
@@ -199,16 +197,5 @@
 		margin: 0;
 		text-transform: uppercase;
 		letter-spacing: 0.05em;
-	}
-
-	.swatch {
-		height: 40px;
-		border-radius: 6px;
-		display: flex;
-		align-items: center;
-		padding: 0 0.75rem;
-		box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.05);
-		color: white;
-		font-size: 14px;
 	}
 </style>

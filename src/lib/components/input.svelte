@@ -89,7 +89,7 @@
 		<input {type} {min} {max} {step} bind:value />
 	{:else}
 		<!-- Email / Text -->
-		<div>
+		<div class="w-full">
 			<input
 				{...restProps}
 				{id}

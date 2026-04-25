@@ -1,5 +1,6 @@
 <script>
 	import { Button } from '$components';
+	import { copyValue } from '$lib/utils';
 	import { ImagePicker, Hero } from '$modules';
 	import { getPaletteSync, getSwatchesSync } from 'colorthief';
 	import { slide } from 'svelte/transition';
@@ -35,10 +36,6 @@
 	}
 
 	const hasAnySwatch = $derived(SWATCH_TYPES.some((type) => swatches[type]));
-
-	async function copyToClipboard(color) {
-		await navigator.clipboard.writeText(color);
-	}
 </script>
 
 <div class="container mx-auto mb-32">
@@ -50,7 +47,7 @@
 			{#if hasAnySwatch}
 				<div class="rounded-lg bg-stone-50 p-6" in:slide>
 					<h3 class="mb-4 text-lg font-semibold">Semantic Swatches</h3>
-					<div class="grid grid-cols-4 gap-6">
+					<div class="grid grid-cols-4 gap-4">
 						{#each SWATCH_TYPES as type (type)}
 							{#if swatches[type]}
 								<div
@@ -84,7 +81,7 @@
 								style="background: {color}"
 								aria-label="Copy {color} to clipboard"
 								title={color}
-								onclick={() => copyToClipboard(color)}
+								onclick={() => copyValue(color)}
 							></button>
 						{/each}
 					</div>
@@ -122,10 +119,10 @@
 							class="color-swatch group relative flex min-w-4 shrink grow cursor-pointer items-center justify-center overflow-hidden transition-all duration-300 hover:min-w-36"
 							style={`--background: ${color.hex}; background-color: var(--background); width: clamp(1%, ${color.percentage}%, 100%)`}
 							title={color.hex}
-							onclick={() => copyToClipboard(color.hex)}
+							onclick={() => copyValue(color.hex)}
 							role="button"
 							tabindex="0"
-							onkeydown={() => copyToClipboard(color.hex)}
+							onkeydown={() => copyValue(color.hex)}
 						>
 							<span
 								class="swap-text font-mono text-nowrap opacity-0 transition duration-300 group-hover:opacity-100"

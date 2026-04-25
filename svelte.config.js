@@ -1,4 +1,5 @@
 import adapter from '@sveltejs/adapter-auto';
+import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
@@ -15,7 +16,12 @@ const config = {
 			$styles: 'src/lib/styles/style.css'
 		}
 	},
-	preprocess: [],
+	preprocess: [vitePreprocess],
+	vite: {
+		ssr: {
+			noExternal: ['svelte-sonner']
+		}
+	},
 	extensions: ['.svelte', '.svx']
 };
 

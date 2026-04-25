@@ -191,7 +191,7 @@
 	<div class="controls grid grid-cols-2 gap-6">
 		<div>
 			<div class="flex justify-between">
-				<div>Color</div>
+				<div class="text-sm">Color</div>
 				{#if stops.length > minStops}
 					<button class="text-red-500" onclick={removeStop}>Remove</button>
 				{/if}
@@ -200,7 +200,7 @@
 		</div>
 
 		<div>
-			<div>Position</div>
+			<div class="text-sm">Position</div>
 			<Input type="number" min="0" max="100" value={selected.pos} oninput={updatePos} />
 		</div>
 	</div>

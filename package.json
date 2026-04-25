@@ -41,6 +41,7 @@
 		"colorthief": "^3.3.1",
 		"nearest-color": "^0.4.4",
 		"sharp": "^0.34.5",
-		"svelte-awesome-slider": "^2.0.0"
+		"svelte-awesome-slider": "^2.0.0",
+		"svelte-sonner": "^1.1.1"
 	}
 }

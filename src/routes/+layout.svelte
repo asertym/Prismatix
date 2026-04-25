@@ -2,7 +2,9 @@
 	import './layout.css';
 	import favicon from '$lib/assets/favicon.svg';
 	import { Footer, Header } from '$modules';
-	import { onNavigate } from '$app/navigation';
+	import { onNavigate, beforeNavigate } from '$app/navigation';
+	import { Toaster } from 'svelte-sonner';
+	import { page } from '$app/stores';
 
 	let { children } = $props();
 
@@ -17,9 +19,16 @@
 			});
 		});
 	});
+
+	beforeNavigate(({ to, cancel }) => {
+		if (to?.url.pathname === $page.url.pathname) {
+			cancel();
+		}
+	});
 </script>
 
 <svelte:head><link rel="icon" href={favicon} /></svelte:head>
+<Toaster />
 <Header />
 <div class="content">
 	{@render children()}

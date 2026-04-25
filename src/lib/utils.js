@@ -1,6 +1,7 @@
 import Color from 'colorjs.io';
 import genSVGPalette from '$lib/genSVG';
 import colorNamer from 'color-namer';
+import { toast } from 'svelte-sonner';
 
 // Copy generated code
 export function copyRender(content) {
@@ -55,4 +56,9 @@ export function luminance(r, g, b) {
 export function PXtoPT(px, failedMessage) {
 	if (typeof px == 'number') return (px * (72 / 96)).toFixed(2);
 	return failedMessage;
+}
+
+export function copyValue(value, message) {
+	navigator.clipboard.writeText(value);
+	toast(message ?? 'Copied to clipboard!');
 }
