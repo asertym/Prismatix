@@ -28,9 +28,10 @@
 </script>
 
 <svelte:head><link rel="icon" href={favicon} /></svelte:head>
+
 <Toaster />
 <Header />
-<div class="content">
+<div class="content mb-32">
 	{@render children()}
 </div>
 <Footer />

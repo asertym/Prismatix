@@ -3,11 +3,12 @@
 	import Logo from '$assets/logo.svg';
 
 	const paths = [
-		{ name: 'Palette Generator', path: '/' },
+		{ name: 'Palette Generator', path: '/palette-generator' },
 		{ name: 'Contrast Checker', path: '/contrast-checker' },
 		{ name: 'Converter', path: '/color-converter' },
 		{ name: 'Gradient Generator', path: '/gradient-generator' },
-		{ name: 'Image Picker', path: '/image-picker' }
+		{ name: 'Image Picker', path: '/image-picker' },
+		{ name: 'Color Mixer', path: '/color-mixer' }
 	];
 </script>
 

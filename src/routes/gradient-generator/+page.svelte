@@ -42,7 +42,7 @@
 	});
 </script>
 
-<div class="container mx-auto my-24">
+<div class="container mx-auto">
 	<Hero
 		title="Gradient Generator"
 		description="Create beautiful colour gradients for your next project with ease"

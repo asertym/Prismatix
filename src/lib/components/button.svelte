@@ -5,8 +5,8 @@
 		ref = $bindable(null),
 		size = 'md',
 		type = 'button',
-		href = void 0,
-		color,
+		href = undefined,
+		color = 'primary',
 		disabled,
 		children,
 		icon,
@@ -21,8 +21,7 @@
 	disabled={href ? undefined : disabled}
 	role={href && disabled ? 'link' : undefined}
 	tabindex={href && disabled ? -1 : 0}
-	class={`button relative inline-block transition-colors ${size ? ` box-${size}` : ''} ${className ?? ''}`}
-	style={`${color ? `--element-color: var(--color-${color}-600); --label-color:var(--color-${color}-50)` : `--element-color:var(--color-stone-50); --label-color:var(--color-stone-900); --color-shadow: var(--color-stone-200)`}`}
+	class={`button relative inline-block ${!href ? 'px-5 py-3' : ''} transition-colors ${size ? `box box-${size}` : ''} ${color} ${className ?? ''}`}
 	bind:this={ref}
 	{...restProps}
 >
@@ -35,7 +34,7 @@
 		{#if icon}
 			<div
 				class="button__icon transition duration-100"
-				style={`${icon.color ? `color: var(--color-${icon.color}-400)` : 'fill-current text-current'}`}
+				style={`${icon.color ? `color: var(--color-${icon.color}-400)` : ''}`}
 			>
 				<Icon class="fill-current text-current" name={icon.name} size={icon.size} />
 			</div>
@@ -48,12 +47,9 @@
 
 	.button {
 		@apply cursor-pointer rounded-xl;
-		background-color: var(--element-color);
-		color: var(--label-color);
 	}
 
-	.button:hover,
-	.button:active {
-		background-color: oklch(from var(--element-color) calc(l - 0.03) c h);
+	.primary {
+		@apply bg-green-300 text-green-950 hover:bg-green-400;
 	}
 </style>

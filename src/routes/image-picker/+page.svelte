@@ -1,5 +1,5 @@
 <script>
-	import { Button } from '$components';
+	import { Button, Tip } from '$components';
 	import { copyValue } from '$lib/utils';
 	import { ImagePicker, Hero } from '$modules';
 	import { getPaletteSync, getSwatchesSync } from 'colorthief';
@@ -81,24 +81,67 @@
 								style="background: {color}"
 								aria-label="Copy {color} to clipboard"
 								title={color}
-								onclick={() => copyValue(color)}
-							></button>
+								onclick={() => copyValue(color)}>{color}</button
+							>
 						{/each}
 					</div>
 				</div>
 			{/if}
-			<div class="flex justify-end">
-				<input
-					bind:this={fileInputEl}
-					type="file"
-					accept="image/*"
-					style="display: none"
-					onchange={(e) => (currentFile = e.target.files[0])}
-				/>
-				<Button class="px-6 py-4" onclick={() => fileInputEl.click()}
-					>{hasImage ? 'Change image' : 'Browse'}</Button
-				>
+			<input
+				bind:this={fileInputEl}
+				type="file"
+				accept="image/*"
+				style="display: none"
+				onchange={(e) => (currentFile = e.target.files[0])}
+			/>
+			{#if hasImage}
+				<div class="flex justify-end" in:slide>
+					<Button class="px-6 py-4" onclick={() => fileInputEl.click()}
+						>{hasImage ? 'Change image' : 'Browse'}</Button
+					>
+				</div>
+			{/if}
+			<!-- Getting Started -->
+			<div class="prose max-w-full">
+				{#if !hasImage}
+					<h2>Getting Started</h2>
+				{/if}
+				<p>
+					Perform deep compositional analysis on any image to extract intelligent, semantic color
+					palettes.
+				</p>
+				<ul>
+					<li>
+						<b>Color Analysis</b>: Automated extraction of dominant hues and their relative
+						proportional weights within the image.
+					</li>
+					<li>
+						<b>Semantic Swatches</b>: Colors categorized into functional roles, complete with
+						accessibility-optimized text recommendations.
+					</li>
+					<li>
+						<b>Manual Sampling</b>: Precise, pixel-level color picking by clicking anywhere on the
+						active image.
+					</li>
+				</ul>
+				<p>To get started, click to browse or drag & drop an image into the image field.</p>
 			</div>
+			{#if !hasImage}
+				<Tip
+					><b>Quick Copy</b>: Click any sampled color or swatch to instantly copy its value to your
+					clipboard. (works with color proportions as well)</Tip
+				>
+				<Tip
+					><b>Picker History</b>: Your manual picks are automatically saved in the picker history
+					for easy retrieval.</Tip
+				>
+			{/if}
+
+			<p>
+				Prismatix operates on a privacy-first, client-side architecture. All image processing and
+				mathematical analysis occur locally in your browser. No data or imagery is ever transmitted
+				to a server, providing a secure and transparent environment for your design work.
+			</p>
 		</div>
 		<!-- Right Side -->
 		<div class="col-span-6 space-y-6">

@@ -1,42 +1,57 @@
-# sv
+# Prismatix
 
-Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).
+Prismatix is a sophisticated, high-performance color utility and design toolkit built with Svelte 5 and Tailwind CSS 4. It provides developers and designers with essential tools for color manipulation, contrast checking, and gradient generation, all within a modern, reactive interface.
 
-## Creating a project
+## 🚀 Tech Stack
 
-If you're seeing this, you've probably already done this step. Congrats!
+- **Framework**: [Svelte 5](https://svelte.dev/) with [Vite](https://vitejs.dev/) (SvelteKit)
+- **Stylting**: [Tailwind CSS 4](https://tailwindcss.com/)
+- **Color Utilities**: `colorjs.io`, `apca-w3`, `color-namer`, `nearest-color`
+- **Package Manager**: pnpm
 
-```sh
-# create a new project
-npx sv create my-app
+## 🛠 Features & Routes
+
+Prismatix offers a suite of specialized tools accessible via the following routes:
+
+- **[Palette Generator](/palette-generator)**: The main tool of the project, a alette generator with component previews that's trying to be as useful as possible.
+- **[/gradient-generator](/gradient-generator)**: An intuitive interface for creating and customizing complex CSS gradients.
+- **[/image-picker](/image-picker)**: A tool to extract color palettes and information from uploaded images.
+- **[/color-converter](/color-converter)**: Seamlessly convert colors between different formats (HEX, RGB, HSL, etc.).
+- **[/contrast-checker](/contrast-checker)**: Ensure WCAG compliance by checking the contrast ratio between foreground and background colors using APCA or standard algorithms.
+
+## 🏗 Architecture
+
+The project follows an atomic design pattern to ensure scalability and maintainability:
+
+- **Components (`src/lib/components/`)**: Atomic UI elements such as `Button`, `Input`, `Select`, and `Icon`.
+- **Modules (`src/lib/modules/`)**: Larger, page-level sections like `Hero`, `Header`, `Footer`, and `Pricing`.
+- **Assets (`src/lib/assets/`)**: Static assets including icons and fonts.
+
+## ⚙️ Development Workflow
+
+### Generating Imports
+
+To maintain clean imports across the project, Prismatix uses barrel files. Whenever you add new components or modules, regenerate the exports:
+
+```bash
+node genImports.js components
+node gen・・genImports.js modules
 ```
 
-To recreate this project with the same configuration:
+### Linting & Formatting
 
-```sh
-# recreate this project
-npx sv create --template minimal --no-types --add tailwindcss="plugins:forms,typography" mdsvex prettier eslint --install npm ./
+The project uses Prettier and ESLint to ensure code quality. Run the following command to check for errors:
+
+```bash
+npm run lint
 ```
 
-## Developing
+## 🔧 Configuration & Aliases
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+The project utilizes SvelteKit aliases for cleaner imports:
 
-```sh
-npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
-
-## Building
-
-To create a production version of your app:
-
-```sh
-npm run build
-```
-
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
+- `$components` → `src/lib/components`
+- `$modules` → `src/lib/modules`
+- `$assets` → `src/lib/assets`
+- `$icons` → `src/lib/assets/icons`
+- `$styles` → `src/lib/styles/style.css`

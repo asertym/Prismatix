@@ -1,7 +1,6 @@
 <!-- ImageColorPicker.svelte -->
 <script>
-	import { createEventDispatcher } from 'svelte';
-	import { tick } from 'svelte';
+	import { createEventDispatcher, tick } from 'svelte';
 	import { Icon } from '$components';
 
 	const dispatch = createEventDispatcher();
@@ -166,10 +165,10 @@
 	}
 </script>
 
-<div class="picker-wrap shadow">
+<div class="picker-wrap overflow-hidden rounded-lg {hasImage ? 'shadow' : 'shadow-lg'}">
 	<!-- Drop zone / canvas -->
 	<div
-		class="relative w-full overflow-hidden rounded-lg bg-stone-50"
+		class="relative w-full overflow-hidden bg-stone-50"
 		class:has-image={hasImage}
 		ondragover={(e) => e.preventDefault()}
 		ondrop={onDrop}
