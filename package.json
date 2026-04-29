@@ -39,6 +39,7 @@
 		"color-namer": "^1.4.0",
 		"colorjs.io": "^0.6.1",
 		"colorthief": "^3.3.1",
+		"dompurify": "^3.4.1",
 		"mdsvex": "^0.12.7",
 		"nearest-color": "^0.4.4",
 		"sharp": "^0.34.5",

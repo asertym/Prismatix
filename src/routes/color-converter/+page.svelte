@@ -1,14 +1,23 @@
 <script>
 	import { Input, Icon } from '$components';
 	import { Hero } from '$modules';
-	import ColorPicker from 'svelte-awesome-color-picker';
-	import { nameThatColor, copyValue } from '$lib/utils';
+	import { ColorPicker } from '$components';
+	import { nameThatColor, copyValue, debounce } from '$lib/utils';
 	import Color from 'colorjs.io';
 	import convert from 'color-convert';
 
 	let inputColor = $state('#112A46');
-	let inputToHex = $derived(new Color(inputColor).toString({ format: 'hex' }));
+	let debouncedColor = $state('#112A46');
 
+	const updateDebouncedColor = debounce((val) => {
+		debouncedColor = val;
+	}, 300);
+
+	$effect(() => {
+		updateDebouncedColor(inputColor);
+	});
+
+	let inputToHex = $derived(new Color(debouncedColor).toString({ format: 'hex' }));
 	let colorName = $derived(nameThatColor(inputToHex));
 
 	let autoCopy = $state(false);
@@ -36,7 +45,7 @@
 	);
 
 	$effect(() => {
-		if (autoCopy && inputColor) {
+		if (autoCopy && debouncedColor) {
 			const currentValue = conversionsArray.find((f) => f.name == selectedFormat)?.value;
 			if (currentValue) copyValue(currentValue, `Auto-Copy: ${currentValue}`);
 		}
@@ -59,23 +68,7 @@
 			</div>
 			<!-- Input & Name -->
 			<div class="flex items-center gap-6">
-				<div class="relative flex items-center">
-					<div
-						class="absolute right-3 z-10 size-6 rounded-lg"
-						style={`background-color: ${inputColor}`}
-					>
-						<ColorPicker
-							bind:hex={inputColor}
-							isAlpha="false"
-							sliderDirection="horizontal"
-							position="responsive"
-							label=""
-						/>
-					</div>
-					<div class="w-full">
-						<Input type="text" name="name" bind:value={inputColor} class="w-full" />
-					</div>
-				</div>
+				<ColorPicker bind:color={inputColor} />
 				<div>{colorName}</div>
 			</div>
 			<div>
@@ -101,7 +94,7 @@
 								>
 									<button
 										class="cursor-pointer overflow-hidden transition"
-										onclick={copyValue(item.value)}
+										onclick={() => copyValue(item.value)}
 									>
 										<Icon name="clipboard" />
 									</button>

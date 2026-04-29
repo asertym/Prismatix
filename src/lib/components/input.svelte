@@ -12,6 +12,7 @@
 		min,
 		max,
 		step,
+		color = 'primary',
 		options = [],
 		error = false,
 		value = $bindable(),
@@ -52,7 +53,7 @@
 	{:else if type == 'toggle'}
 		<!-- Toggle Switch -->
 		<label
-			class="switch-wrapper relative inline-block h-7 w-14 overflow-hidden rounded-full transition-all"
+			class="switch-wrapper {color} relative inline-block h-7 w-14 overflow-hidden rounded-full transition-all"
 		>
 			<input
 				{...restProps}
@@ -120,6 +121,24 @@
 		@apply rounded-xl border border-stone-200 bg-white px-4 py-2 text-emerald-950;
 	}
 
+	.responsive {
+		--element-color: var(--color-primary-200);
+		--color-dot: var(--color-primary-800);
+		&:has(.switch:checked) {
+			--element-color: var(--color-primary-800);
+			--color-dot: var(--color-primary-50);
+		}
+	}
+
+	.primary {
+		--element-color: var(--color-stone-200);
+		--color-dot: var(--color-stone-800);
+		&:has(.switch:checked) {
+			--element-color: var(--color-stone-800);
+			--color-dot: var(--color-stone-50);
+		}
+	}
+
 	.radio:checked + .radio-ui {
 		@apply border-none;
 		background-color: var(--color-stone-800);
@@ -129,18 +148,6 @@
 	.radio-ui > div {
 		background-color: var(--color-stone-100);
 		border-color: var(--color-stone-200);
-	}
-
-	.switch-wrapper {
-		--element-color: var(--color-primary-50, var(--color-stone-200));
-		/* --color-shadow: var(--color-primary-100, var(--color-stone-200)); */
-		--color-dot: var(--color-primary-400, var(--color-stone-800));
-	}
-
-	.switch-wrapper:has(.switch:checked) {
-		--color-dot: var(--color-primary-50, var(--color-stone-50));
-		--element-color: var(--color-primary-400, var(--color-stone-800));
-		/* --color-shadow: var(--color-primary-500, var(--color-stone-950)); */
 	}
 
 	.slider {

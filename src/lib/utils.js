@@ -62,3 +62,11 @@ export function copyValue(value, message) {
 	navigator.clipboard.writeText(value);
 	toast(message ?? 'Copied to clipboard!');
 }
+
+export function debounce(fn, delay = 300) {
+	let timer;
+	return (...args) => {
+		clearTimeout(timer);
+		timer = setTimeout(() => fn(...args), delay);
+	};
+}

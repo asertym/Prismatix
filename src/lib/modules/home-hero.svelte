@@ -103,6 +103,30 @@
 
 	.home-hero {
 		box-shadow: 0 0 80px 60px white inset;
+		:global(.palette) {
+			top: 160px;
+			left: 128px;
+		}
+		:global(.contrast) {
+			top: 280px;
+			left: 261px;
+		}
+		:global(.converter) {
+			top: 400px;
+			left: 207px;
+		}
+		:global(.gradient) {
+			top: 160px;
+			right: 128px;
+		}
+		:global(.picker) {
+			top: 280px;
+			right: 260px;
+		}
+		:global(.mixer) {
+			top: 400px;
+			right: 209px;
+		}
 	}
 
 	.visual {
@@ -159,51 +183,28 @@
 	@media (width <= 96rem) {
 		.home-hero {
 			box-shadow: 0 0 60px 40px white inset;
-		}
-		:global(.palette) {
-			left: 0 !important;
-		}
-		:global(.contrast) {
-			left: 132px !important;
-		}
-		:global(.converter) {
-			left: 84px !important;
-		}
-		:global(.gradient) {
-			right: 0px !important;
-		}
-		:global(.picker) {
-			right: 132px !important;
-		}
-		:global(.mixer) {
-			right: 84px !important;
+			:global(.palette) {
+				left: 0 !important;
+			}
+			:global(.contrast) {
+				left: 132px !important;
+			}
+			:global(.converter) {
+				left: 84px !important;
+			}
+			:global(.gradient) {
+				right: 0px !important;
+			}
+			:global(.picker) {
+				right: 132px !important;
+			}
+			:global(.mixer) {
+				right: 84px !important;
+			}
 		}
 	}
 
-	:global(.palette) {
-		top: 160px;
-		left: 128px;
-	}
-	:global(.contrast) {
-		top: 280px;
-		left: 261px;
-	}
-	:global(.converter) {
-		top: 400px;
-		left: 207px;
-	}
-	:global(.gradient) {
-		top: 160px;
-		right: 128px;
-	}
-	:global(.picker) {
-		top: 280px;
-		right: 260px;
-	}
-	:global(.mixer) {
-		top: 400px;
-		right: 209px;
-	}
+	
 
 	@keyframes rotate {
 		0% {

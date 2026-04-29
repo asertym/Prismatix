@@ -2,31 +2,45 @@
 	import { Hero } from '$modules';
 	import { ColorPicker } from '$components';
 	import { calcAPCA, fontLookupAPCA } from 'apca-w3';
-	import { hexToRgb, luminance, PXtoPT } from '$lib/utils';
+	import { hexToRgb, luminance, PXtoPT, debounce } from '$lib/utils';
 	import { onMount } from 'svelte';
+	import DOMPurify from 'dompurify';
+
 	let { data } = $props();
 
 	let textColor = $state('#112A46');
 	let bgColor = $state('#ACC8E5');
+
+	let debouncedText = $state('#112A46');
+	let debouncedBg = $state('#ACC8E5');
+
 	let contrastRatio = $state('');
 	let fontArray = $state('');
 
-	let wcagRatio = $derived(calcWCAG());
-	let smallRatio = $derived(getWCAGlevel(20));
-	let bigRatio = $derived(getWCAGlevel(32));
-
 	let tipField;
-
+	let currentTip = $state('');
 	let failedMessage = 'X';
 
-	function calcWCAG() {
-		const text = hexToRgb(textColor);
-		const bg = hexToRgb(bgColor);
-		const l1 = luminance(text.r, text.g, text.b);
-		const l2 = luminance(bg.r, bg.g, bg.b);
+	const updateDebouncedColor = debounce((text, bg) => {
+		debouncedText = text;
+		debouncedBg = bg;
+	}, 300);
+
+	$effect(() => {
+		updateDebouncedColor(textColor, bgColor);
+	});
+
+	let wcagRatio = $derived(calcWCAG(debouncedText, debouncedBg));
+	let smallRatio = $derived(getWCAGlevel(20, wcagRatio));
+	let bigRatio = $derived(getWCAGlevel(32, wcagRatio));
+
+	function calcWCAG(text, bg) {
+		const t = hexToRgb(text);
+		const b = hexToRgb(bg);
+		const l1 = luminance(t.r, t.g, t.b);
+		const l2 = luminance(b.r, b.g, b.b);
 		const lighter = Math.max(l1, l2);
 		const darker = Math.min(l1, l2);
-
 		return ((lighter + 0.05) / (darker + 0.05)).toFixed(2);
 	}
 
@@ -47,8 +61,7 @@
 		return '1';
 	}
 
-	function getWCAGlevel(fontSize) {
-		const ratio = wcagRatio;
+	function getWCAGlevel(fontSize, ratio) {
 		const size = parseFloat(fontSize);
 		const isLarge = size >= 24;
 		if (isLarge) {
@@ -63,11 +76,10 @@
 	}
 
 	function calcContrast() {
-		contrastRatio = calcAPCA(textColor, bgColor);
+		contrastRatio = calcAPCA(debouncedText, debouncedBg);
 		fontArray = fontLookupAPCA(contrastRatio);
-
-		document.documentElement.style.setProperty('--color-text', textColor);
-		document.documentElement.style.setProperty('--color-bg', bgColor);
+		document.documentElement.style.setProperty('--color-text', debouncedText);
+		document.documentElement.style.setProperty('--color-bg', debouncedBg);
 	}
 
 	function returnSize(n) {
@@ -77,14 +89,13 @@
 
 	function randomTip() {
 		const random = Math.floor(Math.random() * data.tipsArray.length);
-		// eslint-disable-next-line svelte/no-dom-manipulating
-		tipField.innerHTML = data.tipsArray[random];
+		currentTip = DOMPurify.sanitize(data.tipsArray[random]);
 	}
 
+	// Single effect, reads debounced values only
 	$effect(() => {
-		if (textColor || bgColor) {
+		if (debouncedText && debouncedBg) {
 			calcContrast();
-			calcWCAG();
 		}
 	});
 
@@ -174,7 +185,9 @@
 			style="background-color: var(--color-bg);"
 		>
 			<div class="text-4xl" style="color: var(--color-text)">Did you know?</div>
-			<div class="text-center" style="color: var(--color-text)" bind:this={tipField}></div>
+			<div class="text-center" style="color: var(--color-text)" bind:this={tipField}>
+				{@html currentTip}
+			</div>
 		</div>
 	</div>
 	<div class="grid grid-cols-2 gap-6">

@@ -1,4 +1,3 @@
-<!-- ImageColorPicker.svelte -->
 <script>
 	import { createEventDispatcher, tick } from 'svelte';
 	import { Icon } from '$components';
@@ -18,6 +17,7 @@
 	let hovering = $state(false);
 	let pickedColor = $state(null);
 	let loupePos = $state({ x: 0, y: 0 });
+	let error = $state(null);
 
 	$effect(() => {
 		if (file) loadFile(file);
@@ -63,6 +63,22 @@
 	function onDrop(e) {
 		e.preventDefault();
 		loadFile(e.dataTransfer.files[0]);
+	}
+
+	async function handlePaste(e) {
+		e.preventDefault();
+		const items = e.clipboardData?.items;
+		if (!items) return;
+
+		for (let i = 0; i < items.length; i++) {
+			const item = items[i];
+			if (item.type.startsWith('image/')) {
+				const blob = await item.getAsFile();
+				loadFile(blob);
+				return;
+			}
+		}
+		error = 'No image found in clipboard';
 	}
 
 	function getPixel(e) {
@@ -165,13 +181,18 @@
 	}
 </script>
 
-<div class="picker-wrap overflow-hidden rounded-lg {hasImage ? 'shadow' : 'shadow-lg'}">
+<div
+	class="picker-wrap overflow-hidden rounded-lg {hasImage
+		? 'shadow'
+		: 'border-2 border-dashed border-stone-300'}"
+>
 	<!-- Drop zone / canvas -->
 	<div
-		class="relative w-full overflow-hidden bg-stone-50"
+		class="relative w-full overflow-hidden rounded-lg"
 		class:has-image={hasImage}
 		ondragover={(e) => e.preventDefault()}
 		ondrop={onDrop}
+		onpaste={handlePaste}
 		role="button"
 		tabindex="-1"
 	>
@@ -193,7 +214,7 @@
 		{#if !hasImage}
 			<button
 				type="button"
-				class="absolute inset-0 flex cursor-pointer flex-col items-center justify-center gap-4 text-sm text-stone-600"
+				class="absolute inset-0 flex cursor-pointer flex-col items-center justify-center gap-4 text-sm text-stone-500"
 				onclick={onbrowse}
 				ondragover={(e) => e.preventDefault()}
 				ondrop={onDrop}
@@ -202,6 +223,11 @@
 				<Icon name="image" size="64px" aria-hidden="true" />
 				<span>Drop an image or click to browse</span>
 			</button>
+		{/if}
+
+		<!-- Error message -->
+		{#if error}
+			<div class="mt-2 text-xs text-red-500">{error}</div>
 		{/if}
 
 		<!-- Loupe -->

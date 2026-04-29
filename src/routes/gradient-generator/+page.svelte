@@ -48,9 +48,9 @@
 		description="Create beautiful colour gradients for your next project with ease"
 	></Hero>
 
-	<div class="layout-grid">
+	<div class="grid grid-cols-12 items-start gap-6">
 		<!-- Left: Gradient Picker -->
-		<div class="space-y-6 rounded-lg bg-stone-50 p-6">
+		<div class="col-span-6 space-y-6 rounded-lg bg-stone-50 p-6">
 			<Gradpick bind:stops />
 			<div class="grid grid-cols-2 gap-6">
 				<div>
@@ -71,15 +71,30 @@
 		</div>
 
 		<!-- Right: Preview Panel -->
-		<div>
+		<div class="col-span-6 space-y-6">
 			<!-- Gradient Display -->
 			<div class="gradient-display">
 				<div class="gradient-box" style="background: {preview};"></div>
 			</div>
-			<div class="rounded-lg bg-stone-50 p-6">
+			<div class="flex gap-4">
+				{#each sorted as stop (stop.id)}
+					<div
+						class="swap-text flex size-12 cursor-pointer items-center justify-center rounded font-mono text-sm transition hover:shadow-md"
+						transition:scale
+						style="--background: {stop.color}; background: var(--background)"
+						role="button"
+						tabindex="0"
+						onclick={copyValue(stop.color)}
+						onkeydown={copyValue(stop.color)}
+					>
+						<span class="swatch-pos">{stop.pos}%</span>
+					</div>
+				{/each}
+			</div>
+			<div class="space-y-8 rounded-lg bg-stone-50 p-6">
 				<!-- CSS Output -->
 				<div class="css-output">
-					<label>CSS</label>
+					<div class="label">CSS</div>
 					<code class="relative block rounded bg-white p-3 font-mono text-sm text-stone-800">
 						<button
 							class="absolute top-2.5 right-3 cursor-pointer"
@@ -93,25 +108,9 @@
 					</code>
 				</div>
 
-				<!-- Color Swatches -->
-				<div class="swatches">
-					<h3 class="swatches-title">Stops</h3>
-					<div class="flex gap-4">
-						{#each sorted as stop (stop.id)}
-							<div
-								class="swap-text flex size-12 items-center justify-center rounded font-mono text-sm"
-								transition:scale
-								style="--background: {stop.color}; background: var(--background)"
-							>
-								<span class="swatch-pos">{stop.pos}%</span>
-							</div>
-						{/each}
-					</div>
-				</div>
-
 				<!-- JSON Output -->
-				<div class="json-output mt-8">
-					<label>JSON</label>
+				<div class="json-output">
+					<div class="label">JSON</div>
 					<pre class="json-code">{JSON.stringify(stops, null, 2)}</pre>
 				</div>
 			</div>
@@ -120,26 +119,12 @@
 </div>
 
 <style>
-	.layout-grid {
-		display: grid;
-		grid-template-columns: 1fr 1.5fr;
-		gap: 2rem;
-		align-items: start;
-	}
+	@reference 'tailwindcss';
 
 	@media (max-width: 768px) {
 		.layout-grid {
 			grid-template-columns: 1fr;
 		}
-	}
-
-	.panel-title {
-		font-size: 14px;
-		font-weight: 600;
-		color: #374151;
-		margin: 0 0 1rem 0;
-		text-transform: uppercase;
-		letter-spacing: 0.05em;
 	}
 
 	.gradient-display {
@@ -160,15 +145,8 @@
 		margin-bottom: 1.5rem;
 	}
 
-	.css-output label,
-	.json-output label {
-		display: block;
-		font-size: 12px;
-		font-weight: 600;
-		color: #374151;
-		margin-bottom: 0.5rem;
-		text-transform: uppercase;
-		letter-spacing: 0.05em;
+	.label {
+		@apply mb-2 text-xs font-semibold tracking-wide text-stone-700 uppercase;
 	}
 
 	.json-code {
@@ -187,15 +165,5 @@
 	.swatches {
 		display: flex;
 		flex-direction: column;
-		gap: 0.75rem;
-	}
-
-	.swatches-title {
-		font-size: 12px;
-		font-weight: 600;
-		color: #374151;
-		margin: 0;
-		text-transform: uppercase;
-		letter-spacing: 0.05em;
 	}
 </style>
