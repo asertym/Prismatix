@@ -5,55 +5,65 @@
 	);
 </script>
 
-<div class="home-hero relative flex justify-center overflow-hidden py-28" style="">
-	<div class="background absolute inset-0 flex w-full items-center justify-center max-xl:hidden">
-		<div
-			class="dashes relative -z-10 opacity-40"
-			style={`width: 960px; height: 960px; ${bgImage}`}
-		></div>
-		<div
-			class="dashes relative -z-10 opacity-40"
-			style={`width: 1100px; height: 1100px; ${bgImage}`}
-		></div>
-		<div
-			class="dashes relative -z-10 opacity-40"
-			style={`width: 1240px; height: 1240px; ${bgImage}`}
-		></div>
+<div class="home-hero relative flex justify-center pt-32 pb-14">
+	<div class="absolute inset-0 max-xl:hidden">
+		<div class="absolute inset-0 flex w-full items-center justify-center overflow-hidden">
+			<div
+				class="dashes relative -z-10 opacity-40"
+				style={`width: 960px; height: 960px; ${bgImage}`}
+			></div>
+			<div
+				class="dashes relative -z-10 opacity-40"
+				style={`width: 1100px; height: 1100px; ${bgImage}`}
+			></div>
+			<div
+				class="dashes relative -z-10 opacity-40"
+				style={`width: 1240px; height: 1240px; ${bgImage}`}
+			></div>
+		</div>
 		<HeroIcon
 			name="palette"
 			href="/palette-generator"
 			class="palette hero-icon absolute bg-amber-50 text-amber-950 shadow-amber-600/25"
+			tooltip="Palette Generator"
 		/>
 		<HeroIcon
 			name="contrast"
 			href="/contrast-checker"
 			class="contrast hero-icon absolute bg-red-50 text-red-950 shadow-red-600/25"
+			tooltip="Contrast Checker"
 		/>
 		<HeroIcon
 			name="converter"
 			href="/color-converter"
 			class="converter hero-icon absolute bg-emerald-50 text-emerald-950 shadow-emerald-600/25"
+			tooltip="Color Converter"
 		/>
 		<HeroIcon
 			name="gradient"
 			href="/gradient-generator"
 			class="gradient hero-icon absolute bg-fuchsia-50 text-fuchsia-950 shadow-fuchsia-600/25"
+			tooltip="Gradient Generator"
 		/>
 		<HeroIcon
 			name="picker"
 			href="/image-picker"
 			class="picker hero-icon absolute bg-indigo-50 text-indigo-950 shadow-indigo-600/25"
+			tooltip="Image Picker"
 		/>
 		<HeroIcon
 			name="mixer"
 			href="/color-mixer"
 			class="mixer hero-icon absolute bg-lime-50 text-lime-950 shadow-lime-600/25"
+			tooltip="Color Mixer"
 		/>
 	</div>
 	<div class="content z-10 flex w-218 flex-col items-center justify-center space-y-10 text-center">
 		<div class="flex flex-col items-center justify-center space-y-6 text-center">
-			<h1 class="text-6xl leading-tight font-bold">
-				Precision Color Enginnering for Modern Design
+			<h1 class="text-6xl leading-normal font-bold">
+				Precision Color <span class="visual"
+					><span class="visual-left"></span>Enginnering<span class="visual-right"></span></span
+				> for Modern Design
 			</h1>
 			<p class="block max-w-156 text-xl leading-normal">
 				Go beyond simple color picking. Access deep analytical tools, advanced accessibility
@@ -83,7 +93,7 @@
 		</div>
 		<div class="space-x-10">
 			<Button>To the generator</Button>
-			<Button href="#explore" color="link">Explore toolset</Button>
+			<Button href="#explore" color="clear">Explore toolset</Button>
 		</div>
 	</div>
 </div>
@@ -93,6 +103,36 @@
 
 	.home-hero {
 		box-shadow: 0 0 80px 60px white inset;
+	}
+
+	.visual {
+		@apply relative px-2 py-1;
+		&::after {
+			content: '';
+			@apply absolute -inset-2 border-2 border-blue-400/75;
+		}
+		.visual-left {
+			@apply absolute -inset-y-3 -left-3;
+			&::before {
+				content: '';
+				@apply absolute top-0 z-10 size-2 border-2 border-blue-400/75 bg-white;
+			}
+			&::after {
+				content: '';
+				@apply absolute bottom-0 z-10 size-2 border-2 border-blue-400/75 bg-white;
+			}
+		}
+		.visual-right {
+			@apply absolute -inset-y-3 -right-1;
+			&::before {
+				content: '';
+				@apply absolute top-0 z-10 size-2 border-2 border-blue-400/75 bg-white;
+			}
+			&::after {
+				content: '';
+				@apply absolute bottom-0 z-10 size-2 border-2 border-blue-400 bg-white;
+			}
+		}
 	}
 
 	.dashes {

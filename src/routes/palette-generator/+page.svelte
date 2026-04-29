@@ -107,6 +107,7 @@
 			nudgeS = baseS;
 		}
 	}
+
 	$effect(() => {
 		if (newInput) {
 			const params = new SvelteURLSearchParams();
@@ -121,6 +122,7 @@
 			}
 		}
 	});
+
 	onMount(() => {
 		initParams();
 	});
@@ -137,7 +139,7 @@
 	});
 </script>
 
-<div class="container mx-auto space-y-12">
+<div class="relative container mx-auto space-y-12">
 	<Hero title="Palette generator" description="Create, preview, and export your CSS palette"></Hero>
 
 	<!-- Palette showcase -->
@@ -188,7 +190,7 @@
 	</div>
 
 	<!-- Components -->
-	<div class="mb-36 max-xl:mb-24">
+	<div>
 		<div class="space-y-36">
 			<!-- Components here -->
 			<InView animation="slide-up"><Works /></InView>
@@ -198,117 +200,119 @@
 			<InView animation="slide-up"><Pricing /></InView>
 		</div>
 	</div>
-</div>
 
-<!-- Sticky bottom container -->
-<div
-	class="box box-sm pointer-events-none fixed right-0 bottom-4 left-0 z-20 container mx-auto flex items-stretch justify-between rounded-xl border border-stone-200 bg-white px-6 py-5"
->
-	<!-- Color input -->
-	<div class="pointer-events-auto flex items-center">
-		<div
-			class="group relative flex h-full w-54 items-center rounded-lg"
-			style={`background-color: ${color}`}
-		>
+	<!-- Sticky bottom container -->
+	<div
+		class="box box-sm pointer-events-none sticky right-0 bottom-4 left-0 z-20 container mx-auto flex items-stretch justify-between rounded-xl border border-stone-200 bg-white px-6 py-5"
+	>
+		<!-- Color input -->
+		<div class="pointer-events-auto flex items-center">
 			<div
-				class="picker-label w-full text-center opacity-0 transition-opacity duration-150 group-hover:opacity-100"
-				style={`--background: ${color}`}
+				class="group relative flex h-full w-54 items-center rounded-lg"
+				style={`background-color: ${color}`}
 			>
-				{color}
-			</div>
-			<div class="absolute inset-0 z-10 inline-block">
-				<ColorPicker
-					bind:hex={newInput}
-					isAlpha={false}
-					position="responsive"
-					sliderDirection="horizontal"
-					label=""
-				/>
-			</div>
-		</div>
-	</div>
-	<div>
-		<div class="space-x-2">
-			<Button
-				class="pointer-events-auto rounded px-4 py-4"
-				onclick={randomColor}
-				icon={{ name: 'dice', size: '20px' }}
-			/>
-			<Button
-				class="pointer-events-auto rounded px-4 py-4"
-				onclick={() => (showSettings = !showSettings)}
-				icon={{ name: 'sliders', size: '20px' }}
-			/>
-			<Button
-				class="pointer-events-auto rounded px-4 py-4"
-				color="primary"
-				onclick={() => (showExport = !showExport)}
-				icon={{ name: 'export', size: '20px' }}
-			/>
-		</div>
-		<!-- Settings tooltip -->
-		{#if showSettings}
-			<div
-				class="pointer-events-auto fixed right-16 bottom-20 z-60 w-72 transform rounded-xl border border-stone-200 bg-white p-4 shadow-xl backdrop-blur-md"
-			>
-				<div class="flex flex-col space-y-4">
-					<div class="space-y-1">
-						<span class="ml-1 text-[10px] font-bold tracking-wider text-stone-500 uppercase"
-							>Name</span
-						>
-						<Input type="text" name="name" placeholder="name" bind:value={colorName} class="" />
-					</div>
-
-					<div class="space-y-1">
-						<div class="flex h-4 items-center justify-between px-1">
-							<span class="text-[10px] font-bold tracking-wider text-stone-500 uppercase">
-								Hue
-								{#if nudgeH !== baseH}
-									<button
-										class="ml-2 cursor-pointer rounded-sm border border-stone-500 px-1"
-										onclick={() => {
-											resetConfig('hue');
-										}}>Revert</button
-									>
-								{/if}
-							</span>
-							<span class="font-mono text-[10px] text-stone-500">{Math.round(nudgeH)}&deg;</span>
-						</div>
-						<input
-							type="range"
-							min="0"
-							max="360"
-							bind:value={nudgeH}
-							class="h-1.5 w-full cursor-pointer appearance-none rounded-lg bg-stone-200 accent-stone-800"
-						/>
-					</div>
-
-					<div class="space-y-1">
-						<div class="flex h-4 items-center justify-between px-1">
-							<span class="text-[10px] font-bold tracking-wider text-stone-500 uppercase">
-								Saturation
-								{#if nudgeS !== baseS}
-									<button
-										class="ml-2 cursor-pointer rounded-sm border border-stone-500 px-1"
-										onclick={() => {
-											resetConfig('sat');
-										}}>Revert</button
-									>
-								{/if}
-							</span>
-							<span class="font-mono text-[10px] text-stone-500">{Math.round(nudgeS)}%</span>
-						</div>
-						<input
-							type="range"
-							min="0"
-							max="100"
-							bind:value={nudgeS}
-							class="h-1.5 w-full cursor-pointer appearance-none rounded-lg bg-stone-200 accent-stone-800"
-						/>
-					</div>
+				<div
+					class="picker-label w-full text-center opacity-0 transition-opacity duration-150 group-hover:opacity-100"
+					style={`--background: ${color}`}
+				>
+					{color}
+				</div>
+				<div class="absolute inset-0 z-10 inline-block">
+					<ColorPicker
+						bind:hex={newInput}
+						isAlpha={false}
+						position="responsive"
+						sliderDirection="horizontal"
+						label=""
+					/>
 				</div>
 			</div>
-		{/if}
+		</div>
+		<div>
+			<div class="space-x-2">
+				<Button
+					class="pointer-events-auto rounded px-4 py-4"
+					color="responsive"
+					onclick={randomColor}
+					icon={{ name: 'dice', size: '20px' }}
+				/>
+				<Button
+					class="pointer-events-auto rounded px-4 py-4"
+					color="responsive"
+					onclick={() => (showSettings = !showSettings)}
+					icon={{ name: 'sliders', size: '20px' }}
+				/>
+				<Button
+					class="pointer-events-auto rounded px-4 py-4"
+					color="responsive"
+					onclick={() => (showExport = !showExport)}
+					icon={{ name: 'export', size: '20px' }}
+				/>
+			</div>
+			<!-- Settings tooltip -->
+			{#if showSettings}
+				<div
+					class="pointer-events-auto absolute right-16 bottom-20 z-60 w-72 transform rounded-xl border border-stone-200 bg-white p-4 shadow-xl backdrop-blur-md"
+				>
+					<div class="flex flex-col space-y-4">
+						<div class="space-y-1">
+							<span class="ml-1 text-[10px] font-bold tracking-wider text-stone-500 uppercase"
+								>Name</span
+							>
+							<Input type="text" name="name" placeholder="name" bind:value={colorName} class="" />
+						</div>
+
+						<div class="space-y-1">
+							<div class="flex h-4 items-center justify-between px-1">
+								<span class="text-[10px] font-bold tracking-wider text-stone-500 uppercase">
+									Hue
+									{#if nudgeH !== baseH}
+										<button
+											class="ml-2 cursor-pointer rounded-sm border border-stone-500 px-1"
+											onclick={() => {
+												resetConfig('hue');
+											}}>Revert</button
+										>
+									{/if}
+								</span>
+								<span class="font-mono text-[10px] text-stone-500">{Math.round(nudgeH)}&deg;</span>
+							</div>
+							<input
+								type="range"
+								min="0"
+								max="360"
+								bind:value={nudgeH}
+								class="h-1.5 w-full cursor-pointer appearance-none rounded-lg bg-stone-200 accent-stone-800"
+							/>
+						</div>
+
+						<div class="space-y-1">
+							<div class="flex h-4 items-center justify-between px-1">
+								<span class="text-[10px] font-bold tracking-wider text-stone-500 uppercase">
+									Saturation
+									{#if nudgeS !== baseS}
+										<button
+											class="ml-2 cursor-pointer rounded-sm border border-stone-500 px-1"
+											onclick={() => {
+												resetConfig('sat');
+											}}>Revert</button
+										>
+									{/if}
+								</span>
+								<span class="font-mono text-[10px] text-stone-500">{Math.round(nudgeS)}%</span>
+							</div>
+							<input
+								type="range"
+								min="0"
+								max="100"
+								bind:value={nudgeS}
+								class="h-1.5 w-full cursor-pointer appearance-none rounded-lg bg-stone-200 accent-stone-800"
+							/>
+						</div>
+					</div>
+				</div>
+			{/if}
+		</div>
 	</div>
 </div>
 
@@ -334,7 +338,7 @@
 			<div class="mb-4 flex items-center justify-between">
 				<h3 class="text-lg font-semibold">Export</h3>
 				<Button
-					class="px-2 py-2"
+					color="clear"
 					onclick={() => (showExport = false)}
 					icon={{ name: 'cross', size: '20px' }}
 				></Button>

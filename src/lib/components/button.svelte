@@ -50,6 +50,22 @@
 	}
 
 	.primary {
-		@apply bg-green-300 text-green-950 hover:bg-green-400;
+		@apply bg-blue-500 text-blue-50 hover:bg-blue-600;
+	}
+
+	.secondary {
+		@apply bg-stone-200 text-stone-950 hover:bg-stone-300;
+	}
+
+	.clear {
+		@apply rounded-none p-0;
+	}
+
+	.responsive {
+		background-color: var(--color-primary-300);
+		color: var(--color-primary-950);
+		&:hover {
+			background-color: var(--color-primary-400);
+		}
 	}
 </style>

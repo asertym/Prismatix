@@ -56,7 +56,7 @@
 					Life is good
 				</li>
 			</ul>
-			<Button class="w-full py-3" color="primary" href="#">Get Started</Button>
+			<Button class="w-full py-3" color="responsive" href="#">Get Started</Button>
 		</div>
 
 		<!-- Pro Plan -->
@@ -118,7 +118,7 @@
 					Life is even better
 				</li>
 			</ul>
-			<Button class="w-full py-3" color="primary" href="#">Start Free Trial</Button>
+			<Button class="w-full py-3" color="responsive" href="#">Start Free Trial</Button>
 		</div>
 
 		<!-- Enterprise Plan -->
@@ -167,7 +167,7 @@
 					What more could you want
 				</li>
 			</ul>
-			<Button class="w-full py-3" color="primary" href="#">Contact Sales</Button>
+			<Button class="w-full py-3" color="responsive" href="#">Contact Sales</Button>
 		</div>
 	</div>
 </div>
