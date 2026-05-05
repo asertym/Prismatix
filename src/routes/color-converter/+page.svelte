@@ -1,5 +1,5 @@
 <script>
-	import { Input, Icon } from '$components';
+	import { Input, Icon, Button } from '$components';
 	import { Hero } from '$modules';
 	import { ColorPicker } from '$components';
 	import { nameThatColor, copyValue, debounce } from '$lib/utils';
@@ -60,16 +60,21 @@
 
 	<div class="grid grid-cols-2 gap-6">
 		<!-- Left Side -->
-		<div class="rounded-lg bg-stone-50 p-6">
+		<div class="space-y-6 rounded-lg bg-stone-50 p-6">
 			<!-- Title -->
 			<div>
-				<div>Enter a color</div>
-				<div>Can be a name, hex, rgb, hsl, hwb, cmyk, lch, oklch.</div>
+				<div class="text-3xl font-medium">Enter a color</div>
+				<div class="text-stone-700">Can be a name, hex, rgb, hsl, hwb, cmyk, lch, oklch.</div>
 			</div>
-			<!-- Input & Name -->
-			<div class="flex items-center gap-6">
-				<ColorPicker bind:color={inputColor} />
-				<div>{colorName}</div>
+			<div class="flex items-center justify-between">
+				<!-- Input & Name -->
+				<div class="flex items-center gap-6">
+					<ColorPicker bind:color={inputColor} />
+					<div>{colorName}</div>
+				</div>
+				<Button icon={{ name: 'arrow-right', size: '16px' }} class="text-sm" color="clear"
+					>To the Color Page</Button
+				>
 			</div>
 			<div>
 				<!-- Gamut mapping -->
@@ -79,7 +84,6 @@
 		<div class="space-y-6">
 			<!-- Title -->
 			<div class="rounded-lg bg-stone-50 p-6">
-				<div>Conversion</div>
 				<!-- Conversion Table -->
 				<div class="grid grid-cols-2 gap-2">
 					{#each conversionsArray as item (item.name)}

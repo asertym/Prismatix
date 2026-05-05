@@ -59,7 +59,7 @@
 		/>
 	</div>
 	<div class="content z-10 flex w-218 flex-col items-center justify-center space-y-10 text-center">
-		<div class="flex flex-col items-center justify-center space-y-6 text-center">
+		<div class="flex flex-col items-center justify-center space-y-8 text-center">
 			<h1 class="text-6xl leading-normal font-bold">
 				Precision Color <span class="visual"
 					><span class="visual-left"></span>Enginnering<span class="visual-right"></span></span
@@ -92,8 +92,8 @@
 			<HeroIcon name="mixer" href="/color-mixer" class="hero-icon bg-green-50 text-green-950" />
 		</div>
 		<div class="space-x-10">
-			<Button>To the generator</Button>
-			<Button href="#explore" color="clear">Explore toolset</Button>
+			<Button>Explore toolset</Button>
+			<Button color="tertiary">Our Product Hunt</Button>
 		</div>
 	</div>
 </div>
@@ -203,8 +203,6 @@
 			}
 		}
 	}
-
-	
 
 	@keyframes rotate {
 		0% {
