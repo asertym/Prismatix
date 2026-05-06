@@ -203,7 +203,7 @@
 
 	<!-- Sticky bottom container -->
 	<div
-		class="box box-sm pointer-events-none sticky right-0 bottom-4 left-0 z-20 container mx-auto flex items-stretch justify-between rounded-xl border border-stone-200 bg-white px-6 py-5"
+		class="box box-sm pointer-events-none sticky right-0 bottom-4 left-0 z-20 container mx-auto flex items-stretch justify-between rounded-xl border border-zinc-200 bg-white px-6 py-5"
 	>
 		<!-- Color input -->
 		<div class="pointer-events-auto flex items-center">
@@ -252,11 +252,11 @@
 			<!-- Settings tooltip -->
 			{#if showSettings}
 				<div
-					class="pointer-events-auto absolute right-16 bottom-20 z-60 w-72 transform rounded-xl border border-stone-200 bg-white p-4 shadow-xl backdrop-blur-md"
+					class="pointer-events-auto absolute right-16 bottom-20 z-60 w-72 transform rounded-xl border border-zinc-200 bg-white p-4 shadow-xl backdrop-blur-md"
 				>
 					<div class="flex flex-col space-y-4">
 						<div class="space-y-1">
-							<span class="ml-1 text-[10px] font-bold tracking-wider text-stone-500 uppercase"
+							<span class="ml-1 text-[10px] font-bold tracking-wider text-zinc-500 uppercase"
 								>Name</span
 							>
 							<Input type="text" name="name" placeholder="name" bind:value={colorName} class="" />
@@ -264,49 +264,49 @@
 
 						<div class="space-y-1">
 							<div class="flex h-4 items-center justify-between px-1">
-								<span class="text-[10px] font-bold tracking-wider text-stone-500 uppercase">
+								<span class="text-[10px] font-bold tracking-wider text-zinc-500 uppercase">
 									Hue
 									{#if nudgeH !== baseH}
 										<button
-											class="ml-2 cursor-pointer rounded-sm border border-stone-500 px-1"
+											class="ml-2 cursor-pointer rounded-sm border border-zinc-500 px-1"
 											onclick={() => {
 												resetConfig('hue');
 											}}>Revert</button
 										>
 									{/if}
 								</span>
-								<span class="font-mono text-[10px] text-stone-500">{Math.round(nudgeH)}&deg;</span>
+								<span class="font-mono text-[10px] text-zinc-500">{Math.round(nudgeH)}&deg;</span>
 							</div>
 							<input
 								type="range"
 								min="0"
 								max="360"
 								bind:value={nudgeH}
-								class="h-1.5 w-full cursor-pointer appearance-none rounded-lg bg-stone-200 accent-stone-800"
+								class="h-1.5 w-full cursor-pointer appearance-none rounded-lg bg-zinc-200 accent-zinc-800"
 							/>
 						</div>
 
 						<div class="space-y-1">
 							<div class="flex h-4 items-center justify-between px-1">
-								<span class="text-[10px] font-bold tracking-wider text-stone-500 uppercase">
+								<span class="text-[10px] font-bold tracking-wider text-zinc-500 uppercase">
 									Saturation
 									{#if nudgeS !== baseS}
 										<button
-											class="ml-2 cursor-pointer rounded-sm border border-stone-500 px-1"
+											class="ml-2 cursor-pointer rounded-sm border border-zinc-500 px-1"
 											onclick={() => {
 												resetConfig('sat');
 											}}>Revert</button
 										>
 									{/if}
 								</span>
-								<span class="font-mono text-[10px] text-stone-500">{Math.round(nudgeS)}%</span>
+								<span class="font-mono text-[10px] text-zinc-500">{Math.round(nudgeS)}%</span>
 							</div>
 							<input
 								type="range"
 								min="0"
 								max="100"
 								bind:value={nudgeS}
-								class="h-1.5 w-full cursor-pointer appearance-none rounded-lg bg-stone-200 accent-stone-800"
+								class="h-1.5 w-full cursor-pointer appearance-none rounded-lg bg-zinc-200 accent-zinc-800"
 							/>
 						</div>
 					</div>
@@ -329,7 +329,7 @@
 	<div class="fixed inset-0 z-50 flex items-center justify-center">
 		<!-- Outer -->
 		<div
-			class="absolute inset-0 z-10 bg-stone-950/25"
+			class="absolute inset-0 z-10 bg-zinc-950/25"
 			onclick={() => (showExport = false)}
 			role="presentation"
 		></div>
@@ -368,7 +368,7 @@
 						]}
 					/>
 				</div>
-				<div class="relative w-full rounded-lg bg-stone-800 px-5 pt-8 pb-5 font-mono text-stone-50">
+				<div class="relative w-full rounded-lg bg-zinc-800 px-5 pt-8 pb-5 font-mono text-zinc-50">
 					<button
 						class="absolute top-3 right-5 text-green-500"
 						onclick={copyRender(themeRender.textContent)}

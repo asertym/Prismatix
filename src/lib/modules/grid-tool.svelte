@@ -15,11 +15,11 @@
 	{href}
 	class="group block cursor-pointer overflow-hidden rounded-lg border transition hover:scale-102 hover:shadow-xl {color}"
 >
-	<div class="relative p-6">
+	<div class="relative h-full p-6">
 		<div class="background absolute -top-20 -right-20">
 			<Icon class="opacity-5" name={icon} size="264px" />
 		</div>
-		<div class="content space-y-12 text-amber-950">
+		<div class="content flex h-full flex-col justify-between space-y-12 text-amber-950">
 			<div class="space-y-8">
 				<div class="title text-4xl font-medium">{title}</div>
 				<div class="description text-lg">{description}</div>
@@ -105,6 +105,18 @@
 		}
 		.content {
 			@apply text-lime-950;
+		}
+	}
+	.cyan {
+		@apply border-cyan-100 bg-cyan-50;
+		&:hover {
+			@apply shadow-cyan-600/5;
+		}
+		.background {
+			@apply text-cyan-600;
+		}
+		.content {
+			@apply text-cyan-950;
 		}
 	}
 </style>

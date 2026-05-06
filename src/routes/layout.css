@@ -2,6 +2,8 @@
 @plugin '@tailwindcss/forms';
 @plugin '@tailwindcss/typography';
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 @font-face {
 	font-family: 'Inter';
 	font-style: normal;
@@ -52,7 +54,7 @@
 }
 
 .wrapper {
-	@apply m-0! space-y-3 border border-stone-300! shadow-lg;
+	@apply m-0! space-y-3 border border-zinc-300! shadow-lg;
 }
 
 @keyframes popover {
@@ -79,7 +81,7 @@
 }
 
 .h .thumb {
-	@apply relative flex items-center justify-center border-stone-400!;
+	@apply relative flex items-center justify-center border-zinc-400!;
 }
 
 .h .thumb:after {
@@ -95,7 +97,7 @@
 }
 
 .color-picker .text-input input {
-	@apply border border-stone-300 py-4!;
+	@apply border border-zinc-300 py-4!;
 	--focus-color: transparent;
 }
 .color-picker .text-input input:focus {

@@ -1,6 +1,7 @@
 <script>
 	import { page } from '$app/stores';
 	import Logo from '$assets/logo.svg';
+	import { Darkmode } from '$components';
 
 	const paths = [
 		{ name: 'Palette Generator', path: '/palette-generator' },
@@ -12,16 +13,21 @@
 	];
 </script>
 
-<header class="container mx-auto mt-6 flex items-center justify-between">
+<header
+	class="container mx-auto mt-6 flex items-center justify-between transition dark:text-zinc-50"
+>
 	<div class="logo">
 		<a href="./"><img src={Logo} alt="Prismatix" /></a>
 	</div>
-	<nav class="flex items-center space-x-8">
-		{#each paths as { name, path }, i (i)}
-			{@const active = $page.url.pathname === path ? 'page' : null}
-			<a class="nav-link relative block" aria-current={active} href={path}>{name}</a>
-		{/each}
-	</nav>
+	<div class="flex items-center space-x-6">
+		<nav class="flex items-center space-x-8">
+			{#each paths as { name, path }, i (i)}
+				{@const active = $page.url.pathname === path ? 'page' : null}
+				<a class="nav-link relative block" aria-current={active} href={path}>{name}</a>
+			{/each}
+		</nav>
+		<Darkmode />
+	</div>
 </header>
 
 <style>

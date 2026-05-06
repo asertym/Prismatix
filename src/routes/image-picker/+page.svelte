@@ -45,7 +45,7 @@
 		<div class="col-span-6 space-y-6">
 			<!-- Semantic Swatches -->
 			{#if hasAnySwatch}
-				<div class="rounded-lg bg-stone-50 p-6" in:slide>
+				<div class="rounded-lg bg-zinc-50 p-6" in:slide>
 					<h3 class="mb-4 text-lg font-semibold">Semantic Swatches</h3>
 					<div class="grid grid-cols-4 gap-4">
 						{#each SWATCH_TYPES as type (type)}
@@ -70,7 +70,7 @@
 				</div>
 			{/if}
 			{#if pickedColors.length > 0}
-				<div class="rounded-lg bg-stone-50 p-6" in:slide>
+				<div class="rounded-lg bg-zinc-50 p-6" in:slide>
 					<h3 class="mb-4 text-lg font-semibold">Selection History</h3>
 					<!-- Color History -->
 					<div class="history">

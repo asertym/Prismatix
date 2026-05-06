@@ -3,8 +3,8 @@
 	import ProductHunt from '$assets/featured.svg';
 </script>
 
-<div class="container mx-auto mb-36 rounded-2xl bg-stone-50 px-10 py-16">
-	<div class="space-y-8 border-b border-stone-300 pb-12 text-lg">
+<div class="container mx-auto mb-36 rounded-2xl bg-zinc-50 px-10 py-16">
+	<div class="space-y-8 border-b border-zinc-300 pb-12 text-lg">
 		<div><img src={Logo} alt="Prismatix" /></div>
 		<div class="grid gap-6 max-xl:space-y-12 xl:grid-cols-3">
 			<div class="space-y-8">
@@ -38,6 +38,6 @@
 <style>
 	@reference 'tailwindcss';
 	.title {
-		@apply text-lg font-medium text-stone-500 uppercase;
+		@apply text-lg font-medium text-zinc-500 uppercase;
 	}
 </style>

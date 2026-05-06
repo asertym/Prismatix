@@ -60,11 +60,11 @@
 
 	<div class="grid grid-cols-2 gap-6">
 		<!-- Left Side -->
-		<div class="space-y-6 rounded-lg bg-stone-50 p-6">
+		<div class="space-y-6 rounded-lg bg-zinc-50 p-6">
 			<!-- Title -->
 			<div>
 				<div class="text-3xl font-medium">Enter a color</div>
-				<div class="text-stone-700">Can be a name, hex, rgb, hsl, hwb, cmyk, lch, oklch.</div>
+				<div class="text-zinc-700">Can be a name, hex, rgb, hsl, hwb, cmyk, lch, oklch.</div>
 			</div>
 			<div class="flex items-center justify-between">
 				<!-- Input & Name -->
@@ -83,12 +83,12 @@
 		<!-- Right Side -->
 		<div class="space-y-6">
 			<!-- Title -->
-			<div class="rounded-lg bg-stone-50 p-6">
+			<div class="rounded-lg bg-zinc-50 p-6">
 				<!-- Conversion Table -->
 				<div class="grid grid-cols-2 gap-2">
 					{#each conversionsArray as item (item.name)}
 						<div
-							class="group flex items-center justify-between rounded-lg p-3 transition-colors hover:bg-stone-100"
+							class="group flex items-center justify-between rounded-lg p-3 transition-colors hover:bg-zinc-100"
 						>
 							<div class="uppercase">{item.name}</div>
 							<div class="flex items-center gap-4">
@@ -109,7 +109,7 @@
 				</div>
 			</div>
 			<!-- Auto-Copy -->
-			<div class="space-y-6 rounded-lg bg-stone-50 p-6">
+			<div class="space-y-6 rounded-lg bg-zinc-50 p-6">
 				<!-- Header -->
 				<div>
 					<div class="flex items-center justify-between">
@@ -126,7 +126,7 @@
 							/>
 						</div>
 					</div>
-					<div class="text-sm text-stone-700">Automatically copy conversion on new input.</div>
+					<div class="text-sm text-zinc-700">Automatically copy conversion on new input.</div>
 				</div>
 				<!-- Dropdown -->
 				<Input

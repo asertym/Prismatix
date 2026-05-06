@@ -54,11 +54,11 @@
 	}
 
 	.secondary {
-		@apply bg-stone-200 text-stone-950 hover:bg-stone-300;
+		@apply bg-zinc-200 text-zinc-950 hover:bg-zinc-300;
 	}
 
 	.tertiary {
-		box-shadow: 0px 0px 0px 2px inset var(--color-stone-800);
+		box-shadow: 0px 0px 0px 2px inset var(--color-zinc-800);
 	}
 
 	.clear {

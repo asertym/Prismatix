@@ -184,7 +184,7 @@
 <div
 	class="picker-wrap overflow-hidden rounded-lg {hasImage
 		? 'shadow'
-		: 'border-2 border-dashed border-stone-300'}"
+		: 'border-2 border-dashed border-zinc-300'}"
 >
 	<!-- Drop zone / canvas -->
 	<div
@@ -214,7 +214,7 @@
 		{#if !hasImage}
 			<button
 				type="button"
-				class="absolute inset-0 flex cursor-pointer flex-col items-center justify-center gap-4 text-sm text-stone-500"
+				class="absolute inset-0 flex cursor-pointer flex-col items-center justify-center gap-4 text-sm text-zinc-500"
 				onclick={onbrowse}
 				ondragover={(e) => e.preventDefault()}
 				ondrop={onDrop}

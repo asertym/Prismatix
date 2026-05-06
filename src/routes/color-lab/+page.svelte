@@ -32,7 +32,7 @@
 		<ColorPicker bind:color={inputColor} />
 	</div>
 	<div>
-		<div class="nav-wrapper mx-auto w-fit rounded-full bg-stone-100 p-1">
+		<div class="nav-wrapper mx-auto w-fit rounded-full bg-zinc-100 p-1">
 			<span class="bubble" bind:this={bubbleEl}></span>
 			{#each categories as pill, i (i)}
 				<button

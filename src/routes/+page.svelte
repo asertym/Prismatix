@@ -1,19 +1,19 @@
 <script>
 	import { Highlighter } from '$components';
 	import { HomeHero, GridTool } from '$modules';
-	import tools from '$data/tools';
+
+	let { data } = $props();
 </script>
 
 <div class="container mx-auto space-y-32">
 	<HomeHero />
 	<div class="space-y-10">
-		<div class="text-center font-medium tracking-widest text-stone-600 uppercase">
+		<div class="text-center font-medium tracking-widest text-zinc-600 uppercase">
 			A growing collection of tools
 		</div>
 		<div class="grid grid-cols-3 gap-6">
-			{#each tools as tool}
+			{#each data.tools as tool, index (index)}
 				<GridTool
-					bind:this={tool}
 					color={tool.color}
 					icon={tool.icon}
 					title={tool.title}

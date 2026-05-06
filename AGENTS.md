@@ -24,7 +24,7 @@ You MUST use this tool whenever writing Svelte code before sending it to the use
 - **Framework**: Svelte 5 with Vite (SvelteKit)
 - **CSS**: Tailwind CSS 4
 - **Color Tools**: `colorjs.io`, `apca-w3`, `color-namer`, `nearest-color`
-- **Package Manager**: npm
+- **Package Manager**: pnpm
 
 ## Core Directories
 
@@ -32,16 +32,17 @@ You MUST use this tool whenever writing Svelte code before sending it to the use
 - `src/lib/modules/`: Page-level sections (`Header`, `Footer`, `Hero`, `Pricing`, etc.)
 - `src/routes/`: SvelteKit routing and page components
 - `src/lib/assets/`: Static assets, icons
+- `src/lib/utils/`: Color utilities (contrastCheck.js, genPalette.js, genSVG.js, utils.js)
 - `static/`: Fonts, images, robots.txt
 
 ## Commands
 
-| Command          | Purpose                      |
-| ---------------- | ---------------------------- |
-| `npm run dev`    | Start development server     |
-| `npm run build`  | Production build             |
-| `npm run lint`   | Check with Prettier + ESLint |
-| `npm run format` | Auto-format with Prettier    |
+| Command       | Purpose                      |
+| ------------- | ---------------------------- |
+| `pnpm dev`    | Start development server     |
+| `pnpm build`  | Production build             |
+| `pnpm lint`   | Check with Prettier + ESLint |
+| `pnpm format` | Auto-format with Prettier    |
 
 ## Critical Workflows
 
@@ -50,13 +51,21 @@ You MUST use this tool whenever writing Svelte code before sending it to the use
 After adding new `.svelte` files to `components/` or `modules/`, regenerate barrel exports:
 
 ```bash
-node genImports.js components
-node genImports.js modules
+node genimports components
+node genimports modules
 ```
 
 ### Lint Order Matters
 
-Run `npm run lint` which executes: `prettier --check . && eslint .`
+Run `pnpm lint` which executes: `prettier --check . && eslint .`
+
+## Routes
+
+- `/palette-generator` - Main tool (palette generator)
+- `/gradient-generator` - CSS gradient creation
+- `/image-picker` - Extract colors from images
+- `/color-converter` - Convert between color formats
+- `/contrast-checker` - WCAG compliance checking
 
 ## Prettier Configuration
 
@@ -66,6 +75,11 @@ Run `npm run lint` which executes: `prettier --check . && eslint .`
 - Tailwind CSS plugin sorting on `src/routes/layout.css`
 - Svelte files parsed with `parser: "svelte"`
 
+## Build Config
+
+- Vite excludes image packages from optimizeDeps: @jsquash/avif, @jsquash/jpeg, @jsquash/jxl, @jsquash/png, @jsquash/webp
+- SvelteKit uses mdsvex for Markdown support with `.md` extension
+
 ## SvelteKit Aliases
 
 ```js
@@ -74,11 +88,13 @@ $modules → src/lib/modules
 $assets → src/lib/assets
 $icons → src/lib/assets/icons
 $styles → src/lib/styles/style.css
+$content → src/lib/content/
+$data → src/lib/data/
 ```
 
 ## Color Utilities Location
 
-Color-related utilities live in `src/lib/`:
+Color-related utilities live in `src/lib/utils/`:
 
 - `contrastCheck.js` - WCAG contrast checking
 - `genPalette.js` - Palette generation

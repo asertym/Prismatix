@@ -50,7 +50,7 @@
 
 	<div class="grid grid-cols-12 items-start gap-6">
 		<!-- Left: Gradient Picker -->
-		<div class="col-span-6 space-y-6 rounded-lg bg-stone-50 p-6">
+		<div class="col-span-6 space-y-6 rounded-lg bg-zinc-50 p-6">
 			<Gradpick bind:stops />
 			<div class="grid grid-cols-2 gap-6">
 				<div>
@@ -91,11 +91,11 @@
 					</div>
 				{/each}
 			</div>
-			<div class="space-y-8 rounded-lg bg-stone-50 p-6">
+			<div class="space-y-8 rounded-lg bg-zinc-50 p-6">
 				<!-- CSS Output -->
 				<div class="css-output">
 					<div class="label">CSS</div>
-					<code class="relative block rounded bg-white p-3 font-mono text-sm text-stone-800">
+					<code class="relative block rounded bg-white p-3 font-mono text-sm text-zinc-800">
 						<button
 							class="absolute top-2.5 right-3 cursor-pointer"
 							onclick={() => {
@@ -146,7 +146,7 @@
 	}
 
 	.label {
-		@apply mb-2 text-xs font-semibold tracking-wide text-stone-700 uppercase;
+		@apply mb-2 text-xs font-semibold tracking-wide text-zinc-700 uppercase;
 	}
 
 	.json-code {

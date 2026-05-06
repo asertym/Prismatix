@@ -24,15 +24,15 @@
 			class="flex rounded-2xl max-xl:grid max-xl:grid-cols-2"
 			style="background-color: var(--color-primary-100);"
 		>
-			<div class="block border-r border-stone-950/15 max-xl:border-b">
+			<div class="block border-r border-zinc-950/15 max-xl:border-b">
 				<div class="title">560,000+</div>
 				<div class="description">Daily users on the platform</div>
 			</div>
-			<div class="block border-stone-950/15 max-xl:border-b xl:border-r">
+			<div class="block border-zinc-950/15 max-xl:border-b xl:border-r">
 				<div class="title">0%</div>
 				<div class="description">Service fee</div>
 			</div>
-			<div class="block border-r border-stone-950/15">
+			<div class="block border-r border-zinc-950/15">
 				<div class="title">99.973%</div>
 				<div class="description">Uptime guarantee</div>
 			</div>

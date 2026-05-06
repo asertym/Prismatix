@@ -111,10 +111,10 @@
 	></Hero>
 
 	<div class="grid grid-cols-2 gap-6">
-		<div class="grid grid-cols-2 gap-6 rounded-xl bg-stone-50 p-6 max-xl:col-span-2">
+		<div class="grid grid-cols-2 gap-6 rounded-xl bg-zinc-50 p-6 max-xl:col-span-2">
 			<div class="flex flex-col max-xl:col-span-2">
 				<div>
-					<div class="ml-1 text-[10px] font-bold tracking-wider text-stone-500 uppercase">
+					<div class="ml-1 text-[10px] font-bold tracking-wider text-zinc-500 uppercase">
 						Text Colour
 					</div>
 
@@ -123,14 +123,14 @@
 			</div>
 			<div class="flex flex-col max-xl:col-span-2">
 				<div>
-					<div class="ml-1 text-[10px] font-bold tracking-wider text-stone-500 uppercase">
+					<div class="ml-1 text-[10px] font-bold tracking-wider text-zinc-500 uppercase">
 						Background Colour
 					</div>
 					<ColorPicker bind:color={bgColor} />
 				</div>
 			</div>
 			<div class="col-span-2 space-y-2 max-xl:col-span-2">
-				<div class="ml-1 text-[10px] font-bold tracking-wider text-stone-500 uppercase">
+				<div class="ml-1 text-[10px] font-bold tracking-wider text-zinc-500 uppercase">
 					WCAG Contrast
 				</div>
 				<div class="space-y-6">
@@ -138,27 +138,27 @@
 						<div>{wcagRatio}</div>
 
 						{#if ratingRatio() == 'max'}
-							<span class="flex items-center space-x-2 text-xl text-stone-800">
+							<span class="flex items-center space-x-2 text-xl text-zinc-800">
 								<span class="inline-block size-2 rounded-full bg-green-500"></span>
 								<span>Strong</span>
 							</span>
 						{:else if ratingRatio() == 'high'}
-							<span class="flex items-center space-x-2 text-lg tracking-wide text-stone-800">
+							<span class="flex items-center space-x-2 text-lg tracking-wide text-zinc-800">
 								<span class="inline-block size-2 rounded-full bg-green-500"></span>
 								<span>Good</span>
 							</span>
 						{:else if ratingRatio() == 'medium'}
-							<span class="flex items-center space-x-2 text-lg tracking-wide text-stone-800">
+							<span class="flex items-center space-x-2 text-lg tracking-wide text-zinc-800">
 								<span class="inline-block size-2 rounded-full bg-yellow-500"></span>
 								<span>Decent</span>
 							</span>
 						{:else if ratingRatio() == 'low'}
-							<span class="flex items-center space-x-2 text-lg tracking-wide text-stone-800">
+							<span class="flex items-center space-x-2 text-lg tracking-wide text-zinc-800">
 								<span class="inline-block size-2 rounded-full bg-rose-500"></span>
 								<span>Bad</span>
 							</span>
 						{:else}
-							<span class="flex items-center space-x-2 text-lg tracking-wide text-stone-800">
+							<span class="flex items-center space-x-2 text-lg tracking-wide text-zinc-800">
 								<span class="inline-block size-2 rounded-full bg-red-500"></span>
 								<span>Very Bad</span>
 							</span>
@@ -198,7 +198,7 @@
 				traditional formulas, APCA accounts for the relationship between font size, weight, and
 				perceived luminance to ensure text remains readable across different scales.
 			</div>
-			<div class="w-full overflow-hidden rounded-lg border border-stone-200">
+			<div class="w-full overflow-hidden rounded-lg border border-zinc-200">
 				<table class="w-full text-sm">
 					<thead>
 						<tr class="">
@@ -216,7 +216,7 @@
 					>
 					<tbody>
 						<tr>
-							<td class="texborder-t-stone-700 bg-stone-100 font-medium">Size (px)</td>
+							<td class="texborder-t-zinc-700 bg-zinc-100 font-medium">Size (px)</td>
 							<td class="table-data">{returnSize(1)}</td>
 							<td class="table-data">{returnSize(2)}</td>
 							<td class="table-data">{returnSize(3)}</td>
@@ -228,7 +228,7 @@
 							<td class="table-data">{returnSize(9)}</td>
 						</tr>
 						<tr>
-							<td class="texborder-t-stone-700 bg-stone-100 font-medium">Size (pt)</td>
+							<td class="texborder-t-zinc-700 bg-zinc-100 font-medium">Size (pt)</td>
 							<td class="table-data">{PXtoPT(returnSize(1), failedMessage)}</td>
 							<td class="table-data">{PXtoPT(returnSize(2), failedMessage)}</td>
 							<td class="table-data">{PXtoPT(returnSize(3), failedMessage)}</td>
@@ -256,7 +256,7 @@
 		@apply text-center;
 	}
 	thead {
-		@apply bg-stone-100;
+		@apply bg-zinc-100;
 	}
 	td,
 	th {
@@ -266,9 +266,9 @@
 		@apply font-medium;
 	}
 	tr {
-		@apply border-stone-200;
+		@apply border-zinc-200;
 	}
 	.table-data {
-		@apply text-stone-950;
+		@apply text-zinc-950;
 	}
 </style>

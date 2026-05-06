@@ -143,15 +143,15 @@
 			<ImageUpload bind:files />
 
 			<!-- Conversion Settings -->
-			<div class="space-y-4 rounded-lg bg-stone-50 p-6">
+			<div class="space-y-4 rounded-lg bg-zinc-50 p-6">
 				<div>
-					<label for="output-format" class="mb-2 block text-sm font-medium text-stone-700"
+					<label for="output-format" class="mb-2 block text-sm font-medium text-zinc-700"
 						>Output Format</label
 					>
 					<select
 						id="output-format"
 						bind:value={targetFormat}
-						class="w-full rounded-md border border-stone-300 px-3 py-2 text-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 focus:outline-none"
+						class="w-full rounded-md border border-zinc-300 px-3 py-2 text-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 focus:outline-none"
 					>
 						{#each formats as format, index (index)}
 							<option value={format.value}>{format.label}</option>
@@ -160,7 +160,7 @@
 				</div>
 
 				<div>
-					<label for="quality-slider" class="mb-2 block text-sm font-medium text-stone-700"
+					<label for="quality-slider" class="mb-2 block text-sm font-medium text-zinc-700"
 						>Quality: {quality}%</label
 					>
 					<div class="flex items-center gap-4">
@@ -170,7 +170,7 @@
 							min="50"
 							max="100"
 							bind:value={quality}
-							class="h-2 w-full cursor-pointer appearance-none rounded-lg bg-stone-200 accent-blue-600"
+							class="h-2 w-full cursor-pointer appearance-none rounded-lg bg-zinc-200 accent-blue-600"
 						/>
 						<div class="flex gap-2">
 							{#each qualityPresets as preset, index (index)}
@@ -179,7 +179,7 @@
 									class={`rounded px-3 py-1 text-sm ${
 										quality === preset
 											? 'bg-blue-600 text-white'
-											: 'bg-stone-200 text-stone-700 hover:bg-stone-300'
+											: 'bg-zinc-200 text-zinc-700 hover:bg-zinc-300'
 									}`}
 								>
 									{preset}%
@@ -209,16 +209,16 @@
 				</div>
 
 				{#if isConverting && files.length > 0}
-					<div class="rounded-lg bg-stone-50 p-4">
+					<div class="rounded-lg bg-zinc-50 p-4">
 						<div class="mb-2 flex items-center justify-between text-sm">
-							<span class="text-stone-600">Conversion Progress</span>
-							<span class="text-stone-600"
+							<span class="text-zinc-600">Conversion Progress</span>
+							<span class="text-zinc-600"
 								>{Math.round(
 									Object.values(conversionProgress).reduce((a, b) => a + b, 0) / files.length
 								)}%</span
 							>
 						</div>
-						<div class="h-2 w-full rounded-full bg-stone-200">
+						<div class="h-2 w-full rounded-full bg-zinc-200">
 							<div
 								class="h-2 rounded-full bg-blue-600 transition-all duration-300"
 								style={`width: ${Math.round(Object.values(conversionProgress).reduce((a, b) => a + b, 0) / files.length)}%`}
@@ -232,12 +232,12 @@
 		<!-- Right Side - Results -->
 		<div class="space-y-6">
 			{#if previews.length > 0 && convertedFiles.length === 0}
-				<div class="rounded-lg bg-stone-50 p-6">
+				<div class="rounded-lg bg-zinc-50 p-6">
 					<h3 class="mb-4 text-lg font-medium">Preview Before Conversion</h3>
 					<div class="max-h-[400px] space-y-3 overflow-y-auto">
 						{#each previews as preview, index (index)}
 							<div
-								class="flex items-center justify-between rounded-lg border border-stone-200 bg-white p-3 shadow-sm"
+								class="flex items-center justify-between rounded-lg border border-zinc-200 bg-white p-3 shadow-sm"
 							>
 								<div class="flex min-w-0 flex-1 items-center gap-3">
 									<img
@@ -246,8 +246,8 @@
 										alt="Preview"
 									/>
 									<div class="min-w-0 flex-1">
-										<p class="truncate text-sm font-medium text-stone-700">{files[index]?.name}</p>
-										<p class="text-xs text-stone-500">
+										<p class="truncate text-sm font-medium text-zinc-700">{files[index]?.name}</p>
+										<p class="text-xs text-zinc-500">
 											{(files[index]?.size / 1024).toFixed(2)} KB
 										</p>
 									</div>
@@ -257,7 +257,7 @@
 					</div>
 				</div>
 			{:else if convertedFiles.length > 0}
-				<div class="rounded-lg bg-stone-50 p-6">
+				<div class="rounded-lg bg-zinc-50 p-6">
 					<div class="mb-4 flex items-center justify-between">
 						<h3 class="text-lg font-medium">Converted Images</h3>
 						<button onclick={clearConverted} class="text-sm text-red-600 hover:text-red-700">
@@ -268,7 +268,7 @@
 					<div class="max-h-[400px] space-y-3 overflow-y-auto">
 						{#each convertedFiles as file (file.name)}
 							<div
-								class="flex items-center justify-between rounded-lg border border-stone-200 bg-white p-3 shadow-sm"
+								class="flex items-center justify-between rounded-lg border border-zinc-200 bg-white p-3 shadow-sm"
 							>
 								<div class="flex min-w-0 flex-1 items-center gap-3">
 									<svg
@@ -285,8 +285,8 @@
 										/>
 									</svg>
 									<div class="min-w-0 flex-1">
-										<p class="truncate text-sm font-medium text-stone-700">{file.name}</p>
-										<p class="text-xs text-stone-500">{(file.blob.size / 1024).toFixed(2)} KB</p>
+										<p class="truncate text-sm font-medium text-zinc-700">{file.name}</p>
+										<p class="text-xs text-zinc-500">{(file.blob.size / 1024).toFixed(2)} KB</p>
 									</div>
 								</div>
 								<button
@@ -308,8 +308,8 @@
 					</div>
 				</div>
 			{:else if files.length > 0}
-				<div class="rounded-lg bg-stone-50 p-6 text-center">
-					<p class="text-stone-500">Upload images and click Convert to see results here</p>
+				<div class="rounded-lg bg-zinc-50 p-6 text-center">
+					<p class="text-zinc-500">Upload images and click Convert to see results here</p>
 				</div>
 			{/if}
 		</div>

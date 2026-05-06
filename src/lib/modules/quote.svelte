@@ -8,7 +8,7 @@
 	<div class="icon relative xl:top-12">
 		<Icon name="quote" class="max-xl:size-11!" size="64px" aria-hidden="true" />
 	</div>
-	<div class="grid grid-cols-12 gap-6 text-stone-950">
+	<div class="grid grid-cols-12 gap-6 text-zinc-950">
 		<div
 			class="z-10 col-start-1 col-end-9 flex flex-col justify-center space-y-6 max-xl:col-end-11"
 			style="grid-row: 1;"

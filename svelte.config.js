@@ -21,8 +21,8 @@ const config = {
 			$assets: 'src/lib/assets',
 			$icons: 'src/lib/assets/icons',
 			$styles: 'src/lib/styles/style.css',
-			$content: 'src/content',
-			$data: 'src/lib/data'
+			$data: 'src/lib/data',
+			$content: 'src/content'
 		}
 	},
 	vite: {

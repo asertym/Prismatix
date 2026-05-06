@@ -51,13 +51,13 @@
 			{/each}
 		</select>
 	{:else if type == 'toggle'}
-		<!-- Toggle Switch -->
+		<!-- Toggle -->
 		<label
-			class="switch-wrapper {color} relative inline-block h-7 w-14 overflow-hidden rounded-full transition-all"
+			class="toggle-wrapper {color} relative inline-block h-7 w-14 overflow-hidden rounded-full transition-all"
 		>
 			<input
 				{...restProps}
-				class="input switch h-0 w-0 opacity-0"
+				class="input toggle h-0 w-0 opacity-0"
 				type="checkbox"
 				bind:checked={value}
 			/>
@@ -72,9 +72,9 @@
 				<label class="flex items-center space-x-2">
 					<input class="radio hidden" type="radio" {value} bind:group={family} />
 					<div
-						class="radio-ui flex h-5 w-5 items-center justify-center rounded-full border border-stone-300 transition-all"
+						class="radio-ui flex h-5 w-5 items-center justify-center rounded-full border border-zinc-300 transition-all"
 					>
-						<div class="h-2.5 w-2.5 rounded-full bg-stone-50"></div>
+						<div class="h-2.5 w-2.5 rounded-full bg-zinc-50"></div>
 					</div>
 					<div>{label}</div>
 				</label>
@@ -117,44 +117,48 @@
 
 	.input,
 	.select {
-		--element-color: var(--color-stone-100);
-		@apply rounded-xl border border-stone-200 bg-white px-4 py-2 text-emerald-950;
+		--element-color: var(--color-zinc-100);
+		@apply rounded-xl border border-zinc-200 bg-white px-4 py-2 text-emerald-950;
 	}
 
 	.responsive {
 		--element-color: var(--color-primary-200);
 		--color-dot: var(--color-primary-800);
-		&:has(.switch:checked) {
+		&:has(.toggle:checked) {
 			--element-color: var(--color-primary-800);
 			--color-dot: var(--color-primary-50);
 		}
 	}
 
 	.primary {
-		--element-color: var(--color-stone-200);
-		--color-dot: var(--color-stone-800);
-		&:has(.switch:checked) {
-			--element-color: var(--color-stone-800);
-			--color-dot: var(--color-stone-50);
+		--element-color: var(--color-zinc-200);
+		--color-dot: var(--color-zinc-800);
+		&:has(.toggle:checked) {
+			--element-color: var(--color-zinc-800);
+			--color-dot: var(--color-zinc-50);
 		}
 	}
 
+	/* Radio buttons */
+
 	.radio:checked + .radio-ui {
 		@apply border-none;
-		background-color: var(--color-stone-800);
+		background-color: var(--color-zinc-800);
 	}
 
 	.radio-ui,
 	.radio-ui > div {
-		background-color: var(--color-stone-100);
-		border-color: var(--color-stone-200);
+		background-color: var(--color-zinc-100);
+		border-color: var(--color-zinc-200);
 	}
+
+	/* Toggle */
 
 	.slider {
 		background-color: var(--element-color);
 	}
 
-	.switch:checked + .slider {
+	.toggle:checked + .slider {
 		background-color: var(--element-color);
 	}
 
@@ -168,7 +172,7 @@
 		background-color: var(--color-dot);
 	}
 
-	.switch:checked + .slider > .slider-dot {
+	.toggle:checked + .slider > .slider-dot {
 		left: calc(100% - var(--size));
 		background-color: var(--color-dot);
 	}

@@ -5,26 +5,26 @@
 
 <div class="pricing {className ?? ''}">
 	<div class="mb-12 text-center">
-		<h2 class="text-4xl font-bold tracking-tight text-stone-900">Simple, transparent pricing</h2>
-		<p class="mt-4 text-lg text-stone-600">Choose the plan that works best for you</p>
+		<h2 class="text-4xl font-bold tracking-tight text-zinc-900">Simple, transparent pricing</h2>
+		<p class="mt-4 text-lg text-zinc-600">Choose the plan that works best for you</p>
 	</div>
 
 	<div class="grid gap-8 md:grid-cols-3">
 		<!-- Free Plan -->
 		<div
-			class="flex flex-col rounded-3xl border border-stone-200 bg-white p-8 transition-all hover:shadow-lg"
+			class="flex flex-col rounded-3xl border border-zinc-200 bg-white p-8 transition-all hover:shadow-lg"
 		>
 			<div class="mb-4 flex items-center justify-between">
-				<h3 class="text-xl font-semibold text-stone-900">Free</h3>
-				<span class="rounded-full bg-stone-100 px-3 py-1 text-xs font-medium text-stone-600"
+				<h3 class="text-xl font-semibold text-zinc-900">Free</h3>
+				<span class="rounded-full bg-zinc-100 px-3 py-1 text-xs font-medium text-zinc-600"
 					>Starter</span
 				>
 			</div>
 			<div class="mb-8 flex items-baseline">
-				<span class="text-4xl font-bold tracking-tight text-stone-900">$0</span>
-				<span class="ml-1 text-stone-500">/month</span>
+				<span class="text-4xl font-bold tracking-tight text-zinc-900">$0</span>
+				<span class="ml-1 text-zinc-500">/month</span>
 			</div>
-			<ul class="mb-8 flex-1 space-y-4 text-sm text-stone-600">
+			<ul class="mb-8 flex-1 space-y-4 text-sm text-zinc-600">
 				<li class="flex items-center">
 					<Icon
 						name="check"
@@ -65,7 +65,7 @@
 			style="border-color: var(--color-primary-600); --tw-shadow-color: var(--color-primary-100)"
 		>
 			<div class="mb-4 flex items-center justify-between">
-				<h3 class="text-xl font-semibold text-stone-900">Pro</h3>
+				<h3 class="text-xl font-semibold text-zinc-900">Pro</h3>
 				<span
 					class="rounded-full px-3 py-1 text-xs font-medium"
 					style="background-color: var(--color-primary-100); color: var(--color-primary-700);"
@@ -73,10 +73,10 @@
 				>
 			</div>
 			<div class="mb-8 flex items-baseline">
-				<span class="text-4xl font-bold tracking-tight text-stone-900">$29</span>
-				<span class="ml-1 text-stone-500">/month</span>
+				<span class="text-4xl font-bold tracking-tight text-zinc-900">$29</span>
+				<span class="ml-1 text-zinc-500">/month</span>
 			</div>
-			<ul class="mb-8 flex-1 space-y-4 text-sm text-stone-600">
+			<ul class="mb-8 flex-1 space-y-4 text-sm text-zinc-600">
 				<li class="flex items-center">
 					<Icon
 						name="check"
@@ -123,19 +123,19 @@
 
 		<!-- Enterprise Plan -->
 		<div
-			class="flex flex-col rounded-3xl border border-stone-200 bg-white p-8 transition-all hover:shadow-lg"
+			class="flex flex-col rounded-3xl border border-zinc-200 bg-white p-8 transition-all hover:shadow-lg"
 		>
 			<div class="mb-4 flex items-center justify-between">
-				<h3 class="text-xl font-semibold text-stone-900">Enterprise</h3>
-				<span class="rounded-full bg-stone-100 px-3 py-1 text-xs font-medium text-stone-600"
+				<h3 class="text-xl font-semibold text-zinc-900">Enterprise</h3>
+				<span class="rounded-full bg-zinc-100 px-3 py-1 text-xs font-medium text-zinc-600"
 					>Scale</span
 				>
 			</div>
 			<div class="mb-8 flex items-baseline">
-				<span class="text-4xl font-bold tracking-tight text-stone-900">$99</span>
-				<span class="ml-1 text-stone-500">/month</span>
+				<span class="text-4xl font-bold tracking-tight text-zinc-900">$99</span>
+				<span class="ml-1 text-zinc-500">/month</span>
 			</div>
-			<ul class="mb-8 flex-1 space-y-4 text-sm text-stone-600">
+			<ul class="mb-8 flex-1 space-y-4 text-sm text-zinc-600">
 				<li class="flex items-center">
 					<Icon
 						name="check"
